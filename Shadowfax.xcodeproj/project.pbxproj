@@ -1,0 +1,602 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		486918662522D0FC00F25BFD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486918652522D0FC00F25BFD /* AppDelegate.swift */; };
+		486918682522D0FC00F25BFD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486918672522D0FC00F25BFD /* SceneDelegate.swift */; };
+		4869186A2522D0FC00F25BFD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486918692522D0FC00F25BFD /* ContentView.swift */; };
+		4869186C2522D0FD00F25BFD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4869186B2522D0FD00F25BFD /* Assets.xcassets */; };
+		4869186F2522D0FD00F25BFD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4869186E2522D0FD00F25BFD /* Preview Assets.xcassets */; };
+		486918722522D0FD00F25BFD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 486918702522D0FD00F25BFD /* LaunchScreen.storyboard */; };
+		4869187D2522D0FD00F25BFD /* ShadowfaxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4869187C2522D0FD00F25BFD /* ShadowfaxTests.swift */; };
+		486918882522D0FD00F25BFD /* ShadowfaxUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486918872522D0FD00F25BFD /* ShadowfaxUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		486918792522D0FD00F25BFD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4869185A2522D0FC00F25BFD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 486918612522D0FC00F25BFD;
+			remoteInfo = Shadowfax;
+		};
+		486918842522D0FD00F25BFD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4869185A2522D0FC00F25BFD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 486918612522D0FC00F25BFD;
+			remoteInfo = Shadowfax;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		486918622522D0FC00F25BFD /* Shadowfax.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shadowfax.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		486918652522D0FC00F25BFD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		486918672522D0FC00F25BFD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		486918692522D0FC00F25BFD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		4869186B2522D0FD00F25BFD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4869186E2522D0FD00F25BFD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		486918712522D0FD00F25BFD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		486918732522D0FD00F25BFD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		486918782522D0FD00F25BFD /* ShadowfaxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShadowfaxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4869187C2522D0FD00F25BFD /* ShadowfaxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowfaxTests.swift; sourceTree = "<group>"; };
+		4869187E2522D0FD00F25BFD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		486918832522D0FD00F25BFD /* ShadowfaxUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShadowfaxUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		486918872522D0FD00F25BFD /* ShadowfaxUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowfaxUITests.swift; sourceTree = "<group>"; };
+		486918892522D0FD00F25BFD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4869185F2522D0FC00F25BFD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		486918752522D0FD00F25BFD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		486918802522D0FD00F25BFD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		486918592522D0FC00F25BFD = {
+			isa = PBXGroup;
+			children = (
+				486918642522D0FC00F25BFD /* Shadowfax */,
+				4869187B2522D0FD00F25BFD /* ShadowfaxTests */,
+				486918862522D0FD00F25BFD /* ShadowfaxUITests */,
+				486918632522D0FC00F25BFD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		486918632522D0FC00F25BFD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				486918622522D0FC00F25BFD /* Shadowfax.app */,
+				486918782522D0FD00F25BFD /* ShadowfaxTests.xctest */,
+				486918832522D0FD00F25BFD /* ShadowfaxUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		486918642522D0FC00F25BFD /* Shadowfax */ = {
+			isa = PBXGroup;
+			children = (
+				486918652522D0FC00F25BFD /* AppDelegate.swift */,
+				486918672522D0FC00F25BFD /* SceneDelegate.swift */,
+				486918692522D0FC00F25BFD /* ContentView.swift */,
+				4869186B2522D0FD00F25BFD /* Assets.xcassets */,
+				486918702522D0FD00F25BFD /* LaunchScreen.storyboard */,
+				486918732522D0FD00F25BFD /* Info.plist */,
+				4869186D2522D0FD00F25BFD /* Preview Content */,
+			);
+			path = Shadowfax;
+			sourceTree = "<group>";
+		};
+		4869186D2522D0FD00F25BFD /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				4869186E2522D0FD00F25BFD /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		4869187B2522D0FD00F25BFD /* ShadowfaxTests */ = {
+			isa = PBXGroup;
+			children = (
+				4869187C2522D0FD00F25BFD /* ShadowfaxTests.swift */,
+				4869187E2522D0FD00F25BFD /* Info.plist */,
+			);
+			path = ShadowfaxTests;
+			sourceTree = "<group>";
+		};
+		486918862522D0FD00F25BFD /* ShadowfaxUITests */ = {
+			isa = PBXGroup;
+			children = (
+				486918872522D0FD00F25BFD /* ShadowfaxUITests.swift */,
+				486918892522D0FD00F25BFD /* Info.plist */,
+			);
+			path = ShadowfaxUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		486918612522D0FC00F25BFD /* Shadowfax */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4869188C2522D0FD00F25BFD /* Build configuration list for PBXNativeTarget "Shadowfax" */;
+			buildPhases = (
+				4869185E2522D0FC00F25BFD /* Sources */,
+				4869185F2522D0FC00F25BFD /* Frameworks */,
+				486918602522D0FC00F25BFD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Shadowfax;
+			productName = Shadowfax;
+			productReference = 486918622522D0FC00F25BFD /* Shadowfax.app */;
+			productType = "com.apple.product-type.application";
+		};
+		486918772522D0FD00F25BFD /* ShadowfaxTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4869188F2522D0FD00F25BFD /* Build configuration list for PBXNativeTarget "ShadowfaxTests" */;
+			buildPhases = (
+				486918742522D0FD00F25BFD /* Sources */,
+				486918752522D0FD00F25BFD /* Frameworks */,
+				486918762522D0FD00F25BFD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4869187A2522D0FD00F25BFD /* PBXTargetDependency */,
+			);
+			name = ShadowfaxTests;
+			productName = ShadowfaxTests;
+			productReference = 486918782522D0FD00F25BFD /* ShadowfaxTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		486918822522D0FD00F25BFD /* ShadowfaxUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 486918922522D0FD00F25BFD /* Build configuration list for PBXNativeTarget "ShadowfaxUITests" */;
+			buildPhases = (
+				4869187F2522D0FD00F25BFD /* Sources */,
+				486918802522D0FD00F25BFD /* Frameworks */,
+				486918812522D0FD00F25BFD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				486918852522D0FD00F25BFD /* PBXTargetDependency */,
+			);
+			name = ShadowfaxUITests;
+			productName = ShadowfaxUITests;
+			productReference = 486918832522D0FD00F25BFD /* ShadowfaxUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4869185A2522D0FC00F25BFD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1200;
+				LastUpgradeCheck = 1200;
+				TargetAttributes = {
+					486918612522D0FC00F25BFD = {
+						CreatedOnToolsVersion = 12.0;
+					};
+					486918772522D0FD00F25BFD = {
+						CreatedOnToolsVersion = 12.0;
+						TestTargetID = 486918612522D0FC00F25BFD;
+					};
+					486918822522D0FD00F25BFD = {
+						CreatedOnToolsVersion = 12.0;
+						TestTargetID = 486918612522D0FC00F25BFD;
+					};
+				};
+			};
+			buildConfigurationList = 4869185D2522D0FC00F25BFD /* Build configuration list for PBXProject "Shadowfax" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 486918592522D0FC00F25BFD;
+			productRefGroup = 486918632522D0FC00F25BFD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				486918612522D0FC00F25BFD /* Shadowfax */,
+				486918772522D0FD00F25BFD /* ShadowfaxTests */,
+				486918822522D0FD00F25BFD /* ShadowfaxUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		486918602522D0FC00F25BFD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				486918722522D0FD00F25BFD /* LaunchScreen.storyboard in Resources */,
+				4869186F2522D0FD00F25BFD /* Preview Assets.xcassets in Resources */,
+				4869186C2522D0FD00F25BFD /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		486918762522D0FD00F25BFD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		486918812522D0FD00F25BFD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4869185E2522D0FC00F25BFD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				486918662522D0FC00F25BFD /* AppDelegate.swift in Sources */,
+				486918682522D0FC00F25BFD /* SceneDelegate.swift in Sources */,
+				4869186A2522D0FC00F25BFD /* ContentView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		486918742522D0FD00F25BFD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4869187D2522D0FD00F25BFD /* ShadowfaxTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4869187F2522D0FD00F25BFD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				486918882522D0FD00F25BFD /* ShadowfaxUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4869187A2522D0FD00F25BFD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 486918612522D0FC00F25BFD /* Shadowfax */;
+			targetProxy = 486918792522D0FD00F25BFD /* PBXContainerItemProxy */;
+		};
+		486918852522D0FD00F25BFD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 486918612522D0FC00F25BFD /* Shadowfax */;
+			targetProxy = 486918842522D0FD00F25BFD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		486918702522D0FD00F25BFD /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				486918712522D0FD00F25BFD /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4869188A2522D0FD00F25BFD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		4869188B2522D0FD00F25BFD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4869188D2522D0FD00F25BFD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"Shadowfax/Preview Content\"";
+				DEVELOPMENT_TEAM = NXHV9N6K45;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Shadowfax/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ldhsoftware.Shadowfax;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4869188E2522D0FD00F25BFD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"Shadowfax/Preview Content\"";
+				DEVELOPMENT_TEAM = NXHV9N6K45;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Shadowfax/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ldhsoftware.Shadowfax;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		486918902522D0FD00F25BFD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NXHV9N6K45;
+				INFOPLIST_FILE = ShadowfaxTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ldhsoftware.ShadowfaxTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Shadowfax.app/Shadowfax";
+			};
+			name = Debug;
+		};
+		486918912522D0FD00F25BFD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NXHV9N6K45;
+				INFOPLIST_FILE = ShadowfaxTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ldhsoftware.ShadowfaxTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Shadowfax.app/Shadowfax";
+			};
+			name = Release;
+		};
+		486918932522D0FD00F25BFD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NXHV9N6K45;
+				INFOPLIST_FILE = ShadowfaxUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ldhsoftware.ShadowfaxUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Shadowfax;
+			};
+			name = Debug;
+		};
+		486918942522D0FD00F25BFD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NXHV9N6K45;
+				INFOPLIST_FILE = ShadowfaxUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ldhsoftware.ShadowfaxUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Shadowfax;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4869185D2522D0FC00F25BFD /* Build configuration list for PBXProject "Shadowfax" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4869188A2522D0FD00F25BFD /* Debug */,
+				4869188B2522D0FD00F25BFD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4869188C2522D0FD00F25BFD /* Build configuration list for PBXNativeTarget "Shadowfax" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4869188D2522D0FD00F25BFD /* Debug */,
+				4869188E2522D0FD00F25BFD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4869188F2522D0FD00F25BFD /* Build configuration list for PBXNativeTarget "ShadowfaxTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				486918902522D0FD00F25BFD /* Debug */,
+				486918912522D0FD00F25BFD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		486918922522D0FD00F25BFD /* Build configuration list for PBXNativeTarget "ShadowfaxUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				486918932522D0FD00F25BFD /* Debug */,
+				486918942522D0FD00F25BFD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4869185A2522D0FC00F25BFD /* Project object */;
+}
