@@ -9,12 +9,17 @@
 /* Begin PBXBuildFile section */
 		486918662522D0FC00F25BFD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486918652522D0FC00F25BFD /* AppDelegate.swift */; };
 		486918682522D0FC00F25BFD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486918672522D0FC00F25BFD /* SceneDelegate.swift */; };
-		4869186A2522D0FC00F25BFD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486918692522D0FC00F25BFD /* ContentView.swift */; };
 		4869186C2522D0FD00F25BFD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4869186B2522D0FD00F25BFD /* Assets.xcassets */; };
 		4869186F2522D0FD00F25BFD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4869186E2522D0FD00F25BFD /* Preview Assets.xcassets */; };
 		486918722522D0FD00F25BFD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 486918702522D0FD00F25BFD /* LaunchScreen.storyboard */; };
-		4869187D2522D0FD00F25BFD /* ShadowfaxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4869187C2522D0FD00F25BFD /* ShadowfaxTests.swift */; };
-		486918882522D0FD00F25BFD /* ShadowfaxUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486918872522D0FD00F25BFD /* ShadowfaxUITests.swift */; };
+		486918A32522DE3200F25BFD /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486918A22522DE3200F25BFD /* Math.swift */; };
+		486918AC2522EDC100F25BFD /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486918AB2522EDC100F25BFD /* Renderer.swift */; };
+		486918B92522F1CC00F25BFD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 486918B82522F1CC00F25BFD /* Main.storyboard */; };
+		486918BF2522F43E00F25BFD /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486918BE2522F43E00F25BFD /* Entity.swift */; };
+		486918C82522F55E00F25BFD /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 486918C72522F55E00F25BFD /* Shaders.metal */; };
+		486918D02522F5E700F25BFD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486918CF2522F5E700F25BFD /* ViewController.swift */; };
+		486918D82522F61300F25BFD /* ControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486918D72522F61300F25BFD /* ControlView.swift */; };
+		486918E02523008D00F25BFD /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486918DF2523008D00F25BFD /* Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,17 +43,21 @@
 		486918622522D0FC00F25BFD /* Shadowfax.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shadowfax.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		486918652522D0FC00F25BFD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		486918672522D0FC00F25BFD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		486918692522D0FC00F25BFD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4869186B2522D0FD00F25BFD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4869186E2522D0FD00F25BFD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		486918712522D0FD00F25BFD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		486918732522D0FD00F25BFD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		486918782522D0FD00F25BFD /* ShadowfaxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShadowfaxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4869187C2522D0FD00F25BFD /* ShadowfaxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowfaxTests.swift; sourceTree = "<group>"; };
-		4869187E2522D0FD00F25BFD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		486918832522D0FD00F25BFD /* ShadowfaxUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShadowfaxUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		486918872522D0FD00F25BFD /* ShadowfaxUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowfaxUITests.swift; sourceTree = "<group>"; };
-		486918892522D0FD00F25BFD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		486918A22522DE3200F25BFD /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
+		486918AB2522EDC100F25BFD /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		486918B82522F1CC00F25BFD /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		486918BE2522F43E00F25BFD /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
+		486918C72522F55E00F25BFD /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		486918CF2522F5E700F25BFD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		486918D72522F61300F25BFD /* ControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlView.swift; sourceTree = "<group>"; };
+		486918DF2523008D00F25BFD /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		486918E42523D0A400F25BFD /* Shadowfax-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Shadowfax-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,8 +89,6 @@
 			isa = PBXGroup;
 			children = (
 				486918642522D0FC00F25BFD /* Shadowfax */,
-				4869187B2522D0FD00F25BFD /* ShadowfaxTests */,
-				486918862522D0FD00F25BFD /* ShadowfaxUITests */,
 				486918632522D0FC00F25BFD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -99,12 +106,19 @@
 		486918642522D0FC00F25BFD /* Shadowfax */ = {
 			isa = PBXGroup;
 			children = (
+				486918732522D0FD00F25BFD /* Info.plist */,
 				486918652522D0FC00F25BFD /* AppDelegate.swift */,
 				486918672522D0FC00F25BFD /* SceneDelegate.swift */,
-				486918692522D0FC00F25BFD /* ContentView.swift */,
-				4869186B2522D0FD00F25BFD /* Assets.xcassets */,
+				486918CF2522F5E700F25BFD /* ViewController.swift */,
+				486918E42523D0A400F25BFD /* Shadowfax-Bridging-Header.h */,
+				486918B82522F1CC00F25BFD /* Main.storyboard */,
+				486918C62522F47B00F25BFD /* Views */,
+				486918BD2522F37200F25BFD /* Models */,
+				486918AA2522EC6200F25BFD /* Rendering */,
+				486918A12522DCE800F25BFD /* Utils */,
+				4869189E2522D96B00F25BFD /* Metal */,
 				486918702522D0FD00F25BFD /* LaunchScreen.storyboard */,
-				486918732522D0FD00F25BFD /* Info.plist */,
+				4869186B2522D0FD00F25BFD /* Assets.xcassets */,
 				4869186D2522D0FD00F25BFD /* Preview Content */,
 			);
 			path = Shadowfax;
@@ -118,22 +132,45 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		4869187B2522D0FD00F25BFD /* ShadowfaxTests */ = {
+		4869189E2522D96B00F25BFD /* Metal */ = {
 			isa = PBXGroup;
 			children = (
-				4869187C2522D0FD00F25BFD /* ShadowfaxTests.swift */,
-				4869187E2522D0FD00F25BFD /* Info.plist */,
+				486918C72522F55E00F25BFD /* Shaders.metal */,
 			);
-			path = ShadowfaxTests;
+			path = Metal;
 			sourceTree = "<group>";
 		};
-		486918862522D0FD00F25BFD /* ShadowfaxUITests */ = {
+		486918A12522DCE800F25BFD /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				486918872522D0FD00F25BFD /* ShadowfaxUITests.swift */,
-				486918892522D0FD00F25BFD /* Info.plist */,
+				486918A22522DE3200F25BFD /* Math.swift */,
+				486918DF2523008D00F25BFD /* Utils.swift */,
 			);
-			path = ShadowfaxUITests;
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		486918AA2522EC6200F25BFD /* Rendering */ = {
+			isa = PBXGroup;
+			children = (
+				486918AB2522EDC100F25BFD /* Renderer.swift */,
+			);
+			path = Rendering;
+			sourceTree = "<group>";
+		};
+		486918BD2522F37200F25BFD /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				486918BE2522F43E00F25BFD /* Entity.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		486918C62522F47B00F25BFD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				486918D72522F61300F25BFD /* ControlView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -242,6 +279,7 @@
 				486918722522D0FD00F25BFD /* LaunchScreen.storyboard in Resources */,
 				4869186F2522D0FD00F25BFD /* Preview Assets.xcassets in Resources */,
 				4869186C2522D0FD00F25BFD /* Assets.xcassets in Resources */,
+				486918B92522F1CC00F25BFD /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,8 +305,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				486918662522D0FC00F25BFD /* AppDelegate.swift in Sources */,
+				486918C82522F55E00F25BFD /* Shaders.metal in Sources */,
+				486918E02523008D00F25BFD /* Utils.swift in Sources */,
 				486918682522D0FC00F25BFD /* SceneDelegate.swift in Sources */,
-				4869186A2522D0FC00F25BFD /* ContentView.swift in Sources */,
+				486918BF2522F43E00F25BFD /* Entity.swift in Sources */,
+				486918AC2522EDC100F25BFD /* Renderer.swift in Sources */,
+				486918D02522F5E700F25BFD /* ViewController.swift in Sources */,
+				486918D82522F61300F25BFD /* ControlView.swift in Sources */,
+				486918A32522DE3200F25BFD /* Math.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,7 +320,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4869187D2522D0FD00F25BFD /* ShadowfaxTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,7 +327,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				486918882522D0FD00F25BFD /* ShadowfaxUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,6 +489,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ldhsoftware.Shadowfax;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Shadowfax/Shadowfax-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -468,6 +511,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ldhsoftware.Shadowfax;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Shadowfax/Shadowfax-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
