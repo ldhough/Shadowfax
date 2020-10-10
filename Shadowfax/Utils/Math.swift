@@ -28,6 +28,24 @@ class SfaxMath {
     
 }
 
+extension float4 {
+    static var red:float4 {
+        float4(1, 0, 0, 1)
+    }
+    static var green:float4 {
+        float4(0, 1, 0, 1)
+    }
+    static var blue:float4 {
+        float4(0, 0, 1, 1)
+    }
+    static var yellow:float4 {
+        float4(1, 1, 0, 1)
+    }
+    static var purple:float4 {
+        float4(1, 0, 1, 1)
+    }
+}
+
 extension float4x4 {
     
     var identity:float4x4 {

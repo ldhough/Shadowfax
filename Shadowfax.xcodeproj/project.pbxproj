@@ -20,6 +20,9 @@
 		486918D02522F5E700F25BFD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486918CF2522F5E700F25BFD /* ViewController.swift */; };
 		486918D82522F61300F25BFD /* ControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486918D72522F61300F25BFD /* ControlView.swift */; };
 		486918E02523008D00F25BFD /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486918DF2523008D00F25BFD /* Utils.swift */; };
+		48FA932625322D190007DB36 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48FA932525322D190007DB36 /* Scene.swift */; };
+		48FA932C253237AE0007DB36 /* stag.obj in Resources */ = {isa = PBXBuildFile; fileRef = 48FA932A253237AE0007DB36 /* stag.obj */; };
+		48FA932D253237AE0007DB36 /* stag.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 48FA932B253237AE0007DB36 /* stag.mtl */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +61,9 @@
 		486918D72522F61300F25BFD /* ControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlView.swift; sourceTree = "<group>"; };
 		486918DF2523008D00F25BFD /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		486918E42523D0A400F25BFD /* Shadowfax-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Shadowfax-Bridging-Header.h"; sourceTree = "<group>"; };
+		48FA932525322D190007DB36 /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
+		48FA932A253237AE0007DB36 /* stag.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = stag.obj; sourceTree = "<group>"; };
+		48FA932B253237AE0007DB36 /* stag.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = stag.mtl; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +91,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4833D791253216C10048FEA5 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				48FA932B253237AE0007DB36 /* stag.mtl */,
+				48FA932A253237AE0007DB36 /* stag.obj */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
 		486918592522D0FC00F25BFD = {
 			isa = PBXGroup;
 			children = (
@@ -117,6 +132,7 @@
 				486918AA2522EC6200F25BFD /* Rendering */,
 				486918A12522DCE800F25BFD /* Utils */,
 				4869189E2522D96B00F25BFD /* Metal */,
+				4833D791253216C10048FEA5 /* Assets */,
 				486918702522D0FD00F25BFD /* LaunchScreen.storyboard */,
 				4869186B2522D0FD00F25BFD /* Assets.xcassets */,
 				4869186D2522D0FD00F25BFD /* Preview Content */,
@@ -161,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				486918BE2522F43E00F25BFD /* Entity.swift */,
+				48FA932525322D190007DB36 /* Scene.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -276,7 +293,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48FA932D253237AE0007DB36 /* stag.mtl in Resources */,
 				486918722522D0FD00F25BFD /* LaunchScreen.storyboard in Resources */,
+				48FA932C253237AE0007DB36 /* stag.obj in Resources */,
 				4869186F2522D0FD00F25BFD /* Preview Assets.xcassets in Resources */,
 				4869186C2522D0FD00F25BFD /* Assets.xcassets in Resources */,
 				486918B92522F1CC00F25BFD /* Main.storyboard in Resources */,
@@ -306,6 +325,7 @@
 			files = (
 				486918662522D0FC00F25BFD /* AppDelegate.swift in Sources */,
 				486918C82522F55E00F25BFD /* Shaders.metal in Sources */,
+				48FA932625322D190007DB36 /* Scene.swift in Sources */,
 				486918E02523008D00F25BFD /* Utils.swift in Sources */,
 				486918682522D0FC00F25BFD /* SceneDelegate.swift in Sources */,
 				486918BF2522F43E00F25BFD /* Entity.swift in Sources */,
