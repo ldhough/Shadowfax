@@ -11,7 +11,15 @@ import ModelIO
 
 class Scene {
     
-    var meshes:[MDLMesh] = []
+    var entities:[Entity] = []
+    
+    func addEntity(mesh: MTKMesh, uniforms: Uniforms) {
+        let entity = Entity()
+        entity.mesh = mesh
+        entity.renderPipelineState = Renderer.createModelRenderPipelineState(mesh: mesh)
+        entity.uniforms = uniforms
+        entities.append(entity)
+    }
     
     init() {
         

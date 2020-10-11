@@ -13,6 +13,7 @@ import MetalKit
 class MetalView: MTKView {
     
     var renderer:Renderer!
+    var scene:Scene!
     
     init() {
         print("MetalView init")
@@ -21,8 +22,10 @@ class MetalView: MTKView {
             fatalError("Error")
         }
         colorPixelFormat = .bgra8Unorm
-        clearColor = MTLClearColor(red: 0.1, green: 0.9, blue: 0.1, alpha: 1.0)
-        renderer = Renderer(device: defaultDevice)
+        clearColor = MTLClearColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1.0)
+        let scene = Scene()
+        //buildScene(scene: scene)
+        renderer = Renderer(device: defaultDevice, scene: scene)
         delegate = renderer
     }
     

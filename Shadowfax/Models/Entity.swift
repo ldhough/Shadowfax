@@ -10,10 +10,13 @@ import MetalKit
 import ModelIO
 
 class Entity {
-    
+    var mesh:MTKMesh!
+    var renderPipelineState:MTLRenderPipelineState!
+    var uniforms:Uniforms!
 }
 
 class Models {
+    
     static func importModel(_ device: MTLDevice,
                             _ forResource: String,
                             _ withExtension: String,
@@ -53,9 +56,25 @@ class Models {
         }
         return nil
     }
+    
+}
+
+struct Vertex {
+    var position:float4
+    var color:float4
 }
 
 class PrimitiveModels {
+    
+    static var vertices:[Vertex] = [ //Quad using .triangles
+        Vertex(position: float4(-0.25, 0.25, 0, 1), color: float4.red), //TOP LEFT
+        Vertex(position: float4(-0.25, -0.25, 0, 1), color: float4.blue), //BOTTOM LEFT
+        Vertex(position: float4(0.25, -0.25, 0, 1), color: float4.blue), //BOTTOM RIGHT
+        Vertex(position: float4(0.25, 0.25, 0.0, 1.0), color: float4.red), //TOP RIGHT
+        Vertex(position: float4(-0.25, 0.25, 0, 1), color: float4.red), //TOP LEFT
+        Vertex(position: float4(0.25, -0.25, 0, 1), color: float4.blue) //BOTTOM RIGHT
+    ]
+    
     static func sphere(device: MTLDevice,
                        sphereExtent: float3,
                        segments: SIMD2<UInt32>,
@@ -76,4 +95,5 @@ class PrimitiveModels {
         }
         return nil
     }
+    
 }

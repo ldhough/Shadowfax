@@ -8,11 +8,6 @@
 import MetalKit
 import ModelIO
 
-struct Vertex {
-    var position:float4
-    var color:float4
-}
-
 class Renderer: NSObject, MTKViewDelegate {
     
     static var device:MTLDevice!
@@ -21,87 +16,114 @@ class Renderer: NSObject, MTKViewDelegate {
     static var defaultRenderPipelineState:MTLRenderPipelineState!
     static var uniforms = Uniforms()
     static var vertexBuffer:MTLBuffer!
-    static var vertices:[Vertex] = [ //Quad using .triangles
-        Vertex(position: float4(-0.25, 0.25, 0, 1), color: float4.red), //TOP LEFT
-        Vertex(position: float4(-0.25, -0.25, 0, 1), color: float4.blue), //BOTTOM LEFT
-        Vertex(position: float4(0.25, -0.25, 0, 1), color: float4.blue), //BOTTOM RIGHT
-        Vertex(position: float4(0.25, 0.25, 0.0, 1.0), color: float4.red), //TOP RIGHT
-        Vertex(position: float4(-0.25, 0.25, 0, 1), color: float4.red), //TOP LEFT
-        Vertex(position: float4(0.25, -0.25, 0, 1), color: float4.blue) //BOTTOM RIGHT
-    ]
+    static var projMatrix:float4x4!
     
-    init(device: MTLDevice) {
+    static var scene:Scene!
+    
+    init(device: MTLDevice, scene: Scene) {
         print("Renderer init")
         super.init()
+        
+        Renderer.scene = scene
+        
+        //let aspectRatio = Float(UIScreen.main.bounds.width) / Float(UIScreen.main.bounds.height)
+        //let projectionMatrix = float4x4(fov: SfaxMath.degreesToRadians(45), near: 0.1, far: 100, aspect: aspectRatio)
+        //Renderer.projMatrix = projectionMatrix
+        
         Renderer.device = device
         Renderer.commandQueue = Renderer.device.makeCommandQueue()
         Renderer.library = Renderer.device.makeDefaultLibrary()
-        Renderer.vertexBuffer = device.makeBuffer(bytes: Renderer.vertices,
-                                                  length: MemoryLayout<Vertex>.stride * Renderer.vertices.count,
-                                                 options: [])
         Renderer.createDefaultRenderPipelineState()
+        Renderer.buildScene(scene: scene)
     }
     
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
 
     }
     
-    static func drawSubmeshes(meshes: [MDLMesh] = [], renderPassDescriptor: MTLRenderPassDescriptor) {
-        
-        //Loads model into MTKMesh
-        guard let mesh:MTKMesh = Models.importModel(Renderer.device, "stag", "obj") else {
-            print("Return that should be MTKMesh is nil")
-            return
-        }
-        
-        //let mesh = PrimitiveModels.sphere(device: Renderer.device, sphereExtent: [0.5, 0.25, 0.5], segments: [100, 100])
-        
-//        let renderPassDescriptor = MTLRenderPassDescriptor()
-        
-        let commandBuffer = Renderer.commandQueue.makeCommandBuffer()
-        let commandEncoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDescriptor) //SIGABRT happened here
-        commandEncoder?.setRenderPipelineState(Renderer.createModelRenderPipelineState(mesh: mesh)!)
-        
-        for submesh in mesh.submeshes {
-            commandEncoder!.drawIndexedPrimitives(type: .triangle,
-                                                  indexCount: submesh.indexCount,
-                                                  indexType: submesh.indexType,
-                                                  indexBuffer: submesh.indexBuffer.buffer,
-                                                  indexBufferOffset: submesh.indexBuffer.offset)
-        }
-        commandEncoder?.endEncoding()
-        commandBuffer?.commit()
-        
+    static func buildScene(scene: Scene) {
+        var uniforms = Uniforms()
+        uniforms.modelMatrix = float4x4().identity
+        uniforms.viewMatrix = float4x4(translation: [0, 0, 5]) //Camera back
+        let aspectRatio = Float(UIScreen.main.bounds.width) / Float(UIScreen.main.bounds.height)
+        let projectionMatrix = float4x4(fov: SfaxMath.degreesToRadians(45), near: 0.1, far: 100, aspect: aspectRatio)
+        uniforms.projectionMatrix = projectionMatrix
+        let mesh = PrimitiveModels.sphere(device: Renderer.device, sphereExtent: [0.5, 0.5, 0.5], segments: [100, 100])
+        scene.addEntity(mesh: mesh!, uniforms: uniforms)
     }
     
-    func draw(in view: MTKView) {
-        //Renderer.drawSubmeshes(renderPassDescriptor: view.currentRenderPassDescriptor!)
-        print("Draw call")
-//        guard let mesh:MTKMesh = Models.importModel(Renderer.device, "stag", "obj") else {
+//    static func drawSubmeshes(meshes: [MDLMesh] = [], renderPassDescriptor: MTLRenderPassDescriptor) {
+//
+//        //Loads model into MTKMesh
+//        guard let mesh:MTKMesh = Models.importModel(Renderer.device, "train", "obj") else {
 //            print("Return that should be MTKMesh is nil")
 //            return
 //        }
-        let mesh = PrimitiveModels.sphere(device: Renderer.device, sphereExtent: [0.5, 0.25, 0.5], segments: [100, 100])
+//
+//        //let mesh = PrimitiveModels.sphere(device: Renderer.device, sphereExtent: [0.5, 0.25, 0.5], segments: [100, 100])
+//
+////        let renderPassDescriptor = MTLRenderPassDescriptor()
+//        var uniforms = Uniforms()
+//        uniforms.modelMatrix = float4x4().identity
+//        uniforms.viewMatrix = float4x4(translation: [0, 0, 10]) //Camera back
+//        uniforms.projectionMatrix = Renderer.projMatrix
+//
+//        let commandBuffer = Renderer.commandQueue.makeCommandBuffer()
+//        let commandEncoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDescriptor) //SIGABRT happened here
+//        commandEncoder?.setRenderPipelineState(Renderer.createModelRenderPipelineState(mesh: mesh)!)
+//        commandEncoder?.setVertexBuffer(mesh.vertexBuffers[0].buffer, offset: 0, index: 0)
+//        commandEncoder?.setVertexBytes(&uniforms, length: MemoryLayout<Uniforms>.stride , index: 1)
+//        for submesh in mesh.submeshes {
+//            commandEncoder!.drawIndexedPrimitives(type: .triangle,
+//                                                  indexCount: submesh.indexCount,
+//                                                  indexType: submesh.indexType,
+//                                                  indexBuffer: submesh.indexBuffer.buffer,
+//                                                  indexBufferOffset: submesh.indexBuffer.offset)
+//        }
+//        commandEncoder?.endEncoding()
+//        commandBuffer?.commit()
+//
+//    }
+    
+    func draw(in view: MTKView) {
+        print("Draw call")
+//        guard let mesh:MTKMesh = Models.importModel(Renderer.device, "train", "obj") else {
+//            print("Return that should be MTKMesh is nil")
+//            return
+//        }
+        //let mesh = PrimitiveModels.sphere(device: Renderer.device, sphereExtent: [0.5, 0.5, 0.5], segments: [100, 100])
         
         guard let drawable = view.currentDrawable,
               let renderPassDescriptor = view.currentRenderPassDescriptor else {
             return
         }
+        
         let commandBuffer = Renderer.commandQueue.makeCommandBuffer()
         let commandEncoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
-        commandEncoder?.setRenderPipelineState(Renderer.defaultRenderPipelineState)//Renderer.createModelRenderPipelineState(mesh: mesh)!)//Renderer.defaultRenderPipelineState)
-        //commandEncoder?.setVertexBuffer(Renderer.vertexBuffer, offset: 0, index: 0)
-        commandEncoder?.setVertexBuffer(mesh?.vertexBuffers[0].buffer, offset: 0, index: 0)
-        //commandEncoder?.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: Renderer.vertices.count)
-        guard let submesh = mesh!.submeshes.first else { //one submesh for this model
-            fatalError()
+        //commandEncoder?.setRenderPipelineState(Renderer.createModelRenderPipelineState(mesh: mesh)!)//Renderer.defaultRenderPipelineState)
+        //commandEncoder?.setVertexBuffer(mesh.vertexBuffers[0].buffer, offset: 0, index: 0)
+//        var uniforms = Uniforms()
+//        uniforms.modelMatrix = float4x4().identity
+//        uniforms.viewMatrix = float4x4(translation: [0, 0, 10]) //Camera back
+//        uniforms.projectionMatrix = Renderer.projMatrix
+//        commandEncoder?.setVertexBytes(&uniforms, length: MemoryLayout<Uniforms>.stride , index: 1)
+        print(Renderer.scene.entities.count)
+        for entity in Renderer.scene.entities {
+            print("For entity in Renderer.scene.entities")
+            commandEncoder?.setVertexBuffer(entity.mesh.vertexBuffers[0].buffer, offset: 0, index: 0)
+            commandEncoder?.setRenderPipelineState(entity.renderPipelineState)
+            var uniforms = entity.uniforms
+            commandEncoder?.setVertexBytes(&uniforms, length: MemoryLayout<Uniforms>.stride, index: 1)
+            
+            for submesh in entity.mesh.submeshes {
+                commandEncoder?.drawIndexedPrimitives(type: .lineStrip,
+                                                      indexCount: submesh.indexCount,
+                                                      indexType: submesh.indexType,
+                                                      indexBuffer: submesh.indexBuffer.buffer,
+                                                      indexBufferOffset: 0)
+            }
         }
-        commandEncoder?.drawIndexedPrimitives(type: .lineStrip,
-                                              indexCount: submesh.indexCount,
-                                              indexType: submesh.indexType,
-                                              indexBuffer: submesh.indexBuffer.buffer,
-                                              indexBufferOffset: 0)
-        commandEncoder?.setTriangleFillMode(.lines)
+        
         commandEncoder?.endEncoding()
         commandBuffer?.present(drawable)
         commandBuffer?.commit()

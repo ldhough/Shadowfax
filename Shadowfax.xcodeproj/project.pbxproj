@@ -23,6 +23,8 @@
 		48FA932625322D190007DB36 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48FA932525322D190007DB36 /* Scene.swift */; };
 		48FA932C253237AE0007DB36 /* stag.obj in Resources */ = {isa = PBXBuildFile; fileRef = 48FA932A253237AE0007DB36 /* stag.obj */; };
 		48FA932D253237AE0007DB36 /* stag.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 48FA932B253237AE0007DB36 /* stag.mtl */; };
+		48FA933A25327FD80007DB36 /* train.obj in Resources */ = {isa = PBXBuildFile; fileRef = 48FA933825327FD80007DB36 /* train.obj */; };
+		48FA933B25327FD80007DB36 /* train.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 48FA933925327FD80007DB36 /* train.mtl */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +66,8 @@
 		48FA932525322D190007DB36 /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
 		48FA932A253237AE0007DB36 /* stag.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = stag.obj; sourceTree = "<group>"; };
 		48FA932B253237AE0007DB36 /* stag.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = stag.mtl; sourceTree = "<group>"; };
+		48FA933825327FD80007DB36 /* train.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = train.obj; sourceTree = "<group>"; };
+		48FA933925327FD80007DB36 /* train.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = train.mtl; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +98,8 @@
 		4833D791253216C10048FEA5 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				48FA933925327FD80007DB36 /* train.mtl */,
+				48FA933825327FD80007DB36 /* train.obj */,
 				48FA932B253237AE0007DB36 /* stag.mtl */,
 				48FA932A253237AE0007DB36 /* stag.obj */,
 			);
@@ -125,7 +131,6 @@
 				486918652522D0FC00F25BFD /* AppDelegate.swift */,
 				486918672522D0FC00F25BFD /* SceneDelegate.swift */,
 				486918CF2522F5E700F25BFD /* ViewController.swift */,
-				486918E42523D0A400F25BFD /* Shadowfax-Bridging-Header.h */,
 				486918B82522F1CC00F25BFD /* Main.storyboard */,
 				486918C62522F47B00F25BFD /* Views */,
 				486918BD2522F37200F25BFD /* Models */,
@@ -151,6 +156,7 @@
 		4869189E2522D96B00F25BFD /* Metal */ = {
 			isa = PBXGroup;
 			children = (
+				486918E42523D0A400F25BFD /* Shadowfax-Bridging-Header.h */,
 				486918C72522F55E00F25BFD /* Shaders.metal */,
 			);
 			path = Metal;
@@ -294,6 +300,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				48FA932D253237AE0007DB36 /* stag.mtl in Resources */,
+				48FA933A25327FD80007DB36 /* train.obj in Resources */,
+				48FA933B25327FD80007DB36 /* train.mtl in Resources */,
 				486918722522D0FD00F25BFD /* LaunchScreen.storyboard in Resources */,
 				48FA932C253237AE0007DB36 /* stag.obj in Resources */,
 				4869186F2522D0FD00F25BFD /* Preview Assets.xcassets in Resources */,
@@ -509,7 +517,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ldhsoftware.Shadowfax;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Shadowfax/Shadowfax-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Shadowfax/Metal/Shadowfax-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -531,7 +539,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ldhsoftware.Shadowfax;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Shadowfax/Shadowfax-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Shadowfax/Metal/Shadowfax-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

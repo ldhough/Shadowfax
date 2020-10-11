@@ -6,6 +6,7 @@
 //
 
 #include <metal_stdlib>
+#import "Shadowfax-Bridging-Header.h"
 using namespace metal;
 
 struct VertexIn {
@@ -18,10 +19,10 @@ struct VertexOut {
     float4 color;
 };
 
-vertex VertexOut vertex_main(const VertexIn in [[stage_in]]) {//,
-                              //constant Uniforms &uniforms [[buffer(1)]]) {
+vertex VertexOut vertex_main(const VertexIn in [[stage_in]],//,
+                              constant Uniforms &uniforms [[buffer(1)]]) {
     VertexOut vertexOut {
-        .position = in.pos//,
+        .position = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * in.pos//,
         //.color = in.color
     };
     return vertexOut;

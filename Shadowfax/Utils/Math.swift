@@ -48,6 +48,18 @@ extension float4 {
 
 extension float4x4 {
     
+    init(fov: Float, near: Float, far: Float, aspect: Float) {
+        let y = 1 / tan(fov * 0.5)
+        let x = y / aspect
+        let z = far / (far - near)
+        let X = float4( x,  0,  0,  0)
+        let Y = float4( 0,  y,  0,  0)
+        let Z = float4( 0,  0,  z, 1)
+        let W = float4( 0,  0,  z * -near,  0)
+        self.init()
+        columns = (X, Y, Z, W)
+    }
+    
     var identity:float4x4 {
         matrix_identity_float4x4
     }
