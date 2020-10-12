@@ -13,11 +13,12 @@ class Scene {
     
     var entities:[Entity] = []
     
-    func addEntity(mesh: MTKMesh, uniforms: Uniforms, texture: MTLTexture? = nil) {
+    func addEntity(name: String = "", mesh: MTKMesh, uniforms: Uniforms, texture: MTLTexture? = nil) {
         let entity = Entity()
         entity.mesh = mesh
         entity.renderPipelineState = Renderer.createModelRenderPipelineState(mesh: mesh)
         entity.uniforms = uniforms
+        entity.name = name
         if texture != nil {
             entity.tex = texture
         }

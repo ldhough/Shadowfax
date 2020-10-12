@@ -10,6 +10,7 @@ import MetalKit
 import ModelIO
 
 class Entity {
+    var name:String!
     var mesh:MTKMesh!
     var tex:MTLTexture!
     var renderPipelineState:MTLRenderPipelineState!

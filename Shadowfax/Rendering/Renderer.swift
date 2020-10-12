@@ -43,17 +43,22 @@ class Renderer: NSObject, MTKViewDelegate {
         //SUN
         var uniforms = Uniforms()
         uniforms.modelMatrix = float4x4().identity
-        uniforms.viewMatrix = float4x4(translation: [0, 0, 10]) //Camera back
+        uniforms.viewMatrix = float4x4(translation: [0, 0, 30]) //Camera back
         let aspectRatio = Float(UIScreen.main.bounds.width) / Float(UIScreen.main.bounds.height)
         let projectionMatrix = float4x4(fov: SfaxMath.degreesToRadians(45), near: 0.1, far: 100, aspect: aspectRatio)
         uniforms.projectionMatrix = projectionMatrix
         let mesh = Models.importModel(Renderer.device, "planetsphere", "obj")
-        //let mesh = PrimitiveModels.sphere(device: Renderer.device, sphereExtent: [0.5, 0.5, 0.5], segments: [100, 100])
+        let tex = Utils.loadTexture(imageName: "sun.png") //tex
+        scene.addEntity(name: "Sun", mesh: mesh!, uniforms: uniforms, texture: tex)
         
-        //tex
-        let tex = Utils.loadTexture(imageName: "sun.png")
-        
-        scene.addEntity(mesh: mesh!, uniforms: uniforms, texture: tex)
+        //EARTH
+        var uniformsEarth = Uniforms()
+        uniformsEarth.modelMatrix = float4x4().identity//float4x4(scaling: [0.5, 0.5, 0.5]) //half size of sun
+        uniformsEarth.viewMatrix = float4x4(translation: [0, 0, 30]) //Camera back - look into applying just one
+        uniformsEarth.projectionMatrix = projectionMatrix
+        let meshEarth = Models.importModel(Renderer.device, "planetsphere", "obj")
+        let texEarth = Utils.loadTexture(imageName: "earth.png")
+        scene.addEntity(name: "Earth", mesh: meshEarth!, uniforms: uniformsEarth, texture: texEarth)
     }
     
     static func buildDepthStencilState() -> MTLDepthStencilState? {
@@ -82,7 +87,17 @@ class Renderer: NSObject, MTKViewDelegate {
             commandEncoder?.setVertexBuffer(entity.mesh.vertexBuffers[0].buffer, offset: 0, index: 0)
             commandEncoder?.setRenderPipelineState(entity.renderPipelineState)
             var uniforms = entity.uniforms
-            uniforms?.modelMatrix = float4x4(rotationY: SfaxMath.degreesToRadians(Renderer.timer))
+            if entity.name == "Sun" { //hacky temp solution
+                uniforms?.modelMatrix = float4x4(rotationY: SfaxMath.degreesToRadians(Renderer.timer*10.0)).inverse
+            }
+            if entity.name == "Earth" {
+                let scale = float4x4(scaling: [0.5, 0.5, 0.5])
+                let moveOut = float4x4(translation: [3, 0, 0])
+                let notUpsideDown = float4x4(rotationZ: SfaxMath.degreesToRadians(180.0))
+                let aroundSun = float4x4(rotationY: SfaxMath.degreesToRadians(Renderer.timer*5.0))
+                uniforms?.modelMatrix = notUpsideDown * aroundSun * moveOut * scale
+            }
+            
             commandEncoder?.setVertexBytes(&uniforms, length: MemoryLayout<Uniforms>.stride, index: 1)
             commandEncoder?.setVertexBytes(&Renderer.timer, length: MemoryLayout<Float>.stride, index: 2)
             commandEncoder?.setFragmentBytes(&Renderer.timer, length: MemoryLayout<Float>.stride, index: 1)
