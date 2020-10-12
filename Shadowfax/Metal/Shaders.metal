@@ -10,26 +10,38 @@
 using namespace metal;
 
 struct VertexIn {
-    float4 pos [[attribute(0)]];
-    //float4 color [[attribute(1)]];
+    float4 pos [[attribute(0)]]; //should be float3?
+    float3 normal [[attribute(1)]]; //normal
+    float2 uv [[attribute(2)]];
 };
 
 struct VertexOut {
     float4 position [[position]];
+    float2 uv;
     float4 color;
 };
 
-vertex VertexOut vertex_main(const VertexIn in [[stage_in]],//,
-                              constant Uniforms &uniforms [[buffer(1)]]) {
+vertex VertexOut vertex_main(const VertexIn in [[stage_in]],
+                             constant Uniforms &uniforms [[buffer(1)]],
+                             constant float &timer [[buffer(2)]]) {
+    float2 uv;
+    uv.x = in.uv.x;
+    uv.y = in.uv.y;
+    
     VertexOut vertexOut {
         .position = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * in.pos//,
-        //.color = in.color
+        ,.uv = uv//.color = in.color
     };
     return vertexOut;
 }
 
-fragment float4 fragment_main(VertexOut in [[stage_in]]) {
-    return float4(0, 0, 1, 1);//in.color;
+fragment float4 fragment_main(VertexOut in [[stage_in]],
+                              texture2d<float> objTex [[texture(0)]],
+                              constant float &timer [[buffer(1)]]) {
+    constexpr sampler defaultSampler;
+    constexpr sampler textureSampler(filter::linear, address::repeat);
+    float4 color = objTex.sample(defaultSampler, float2(in.uv.x/*2048*/, in.uv.y/*2048*/));
+    return color;//float4(0, 0, 1, 1);//in.color;
 }
 
 //Ghost shader

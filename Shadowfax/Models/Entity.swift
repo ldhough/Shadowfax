@@ -11,6 +11,7 @@ import ModelIO
 
 class Entity {
     var mesh:MTKMesh!
+    var tex:MTLTexture!
     var renderPipelineState:MTLRenderPipelineState!
     var uniforms:Uniforms!
 }
@@ -26,15 +27,50 @@ class Models {
         }
         var vD:MTLVertexDescriptor
         if vertexDescriptor == nil {
-            vD = MTLVertexDescriptor()
-            vD.attributes[0].format = .float3
-            vD.attributes[0].offset = 0
-            vD.attributes[0].bufferIndex = 0
-            vD.layouts[0].stride = MemoryLayout<float3>.stride
-            let meshDescriptor = MTKModelIOVertexDescriptorFromMetal(vD)
-            (meshDescriptor.attributes[0] as! MDLVertexAttribute).name = MDLVertexAttributePosition
+            let mdlVertDes:MDLVertexDescriptor = MDLVertexDescriptor()
+            var offset  = 0
+            mdlVertDes.attributes[0] = MDLVertexAttribute(name: MDLVertexAttributePosition, //pos
+                                                          format: .float3,
+                                                          offset: 0,
+                                                          bufferIndex: 0)
+            offset += MemoryLayout<float3>.stride
+            mdlVertDes.attributes[1] = MDLVertexAttribute(name: MDLVertexAttributeNormal, //normal
+                                                          format: .float3,
+                                                          offset: offset,
+                                                          bufferIndex: 0)
+            offset += MemoryLayout<float3>.stride
+            mdlVertDes.attributes[2] = MDLVertexAttribute(name: MDLVertexAttributeTextureCoordinate, //uv
+                                                          format: .float2,
+                                                          offset: offset,
+                                                          bufferIndex: 0)
+            offset += MemoryLayout<float2>.stride
+            mdlVertDes.layouts[0] = MDLVertexBufferLayout(stride: offset)
+//            vD = MTLVertexDescriptor()
+//            var offset = 0
+//
+//            vD.attributes[0].format = .float3 //pos / xyz
+//            vD.attributes[0].offset = 0
+//            vD.attributes[0].bufferIndex = 0
+//            offset += MemoryLayout<float3>.stride
+//            //vD.layouts[0].stride = MemoryLayout<float3>.stride
+//
+//            vD.attributes[1].format = .float3 //normal
+//            vD.attributes[1].offset = offset
+//            vD.attributes[1].bufferIndex = 0
+//            offset += MemoryLayout<float3>.stride
+//
+//            vD.attributes[2].format = .float2
+//            vD.attributes[2].offset = offset
+//            vD.attributes[2].bufferIndex = 0
+//            offset += MemoryLayout<float2>.stride
+//
+//            vD.layouts[0].stride = offset
+//
+//
+//            let meshDescriptor = MTKModelIOVertexDescriptorFromMetal(vD)
+//            (meshDescriptor.attributes[0] as! MDLVertexAttribute).name = MDLVertexAttributePosition
             let allocator = MTKMeshBufferAllocator(device: device)
-            let asset = MDLAsset(url: assetURL, vertexDescriptor: meshDescriptor, bufferAllocator: allocator)
+            let asset = MDLAsset(url: assetURL, vertexDescriptor: /*meshDescriptor*/mdlVertDes, bufferAllocator: allocator)
             let mdlMesh = asset.childObjects(of: MDLMesh.self).first as! MDLMesh
             do {
                 return try MTKMesh(mesh: mdlMesh, device: device)
@@ -86,6 +122,8 @@ class PrimitiveModels {
                               inwardNormals: inwardNormals,
                               geometryType: geometryType,
                               allocator: allocator)
+        //mdlMesh.addNormals(withAttributeNamed: <#T##String?#>, creaseThreshold: <#T##Float#>)
+        //mdlMesh.addUnwrappedTextureCoordinates(forAttributeNamed: MDLVertexAttributePosition)//MDLVertexAttributePosition")
         var mesh:MTKMesh
         do {
             mesh = try MTKMesh(mesh: mdlMesh, device: device)

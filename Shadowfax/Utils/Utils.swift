@@ -49,4 +49,53 @@ class Utils {
         return texture
     }
     
+    static func loadTexture(imageName: String) -> MTLTexture? {
+        
+        let textureLoader = MTKTextureLoader(device: Renderer.device)
+        var texture:MTLTexture?
+        let textureLoaderOptions:[MTKTextureLoader.Option: Any]
+        textureLoaderOptions = [.SRGB: false]
+        
+        do {
+            let fileType: String? = URL(fileURLWithPath: imageName).pathExtension.count == 0 ? "png" : nil
+            if let url: URL = Bundle.main.url(forResource: imageName, withExtension: fileType) {
+                texture = try textureLoader.newTexture(URL: url, options: textureLoaderOptions)
+                
+            } else {
+                print("failed to load \(imageName)")
+            }
+        } catch {
+            print("Error loading texture")
+            print(error)
+        }
+        
+        return texture
+    }
+    
+}
+
+extension MDLVertexDescriptor {
+    
+    static func pos3Norm3Tex3MDLVertDes() -> MDLVertexDescriptor {
+        let mdlVertDes:MDLVertexDescriptor = MDLVertexDescriptor()
+        var offset  = 0
+        mdlVertDes.attributes[0] = MDLVertexAttribute(name: MDLVertexAttributePosition, //pos
+                                                      format: .float3,
+                                                      offset: 0,
+                                                      bufferIndex: 0)
+        offset += MemoryLayout<float3>.stride
+        mdlVertDes.attributes[1] = MDLVertexAttribute(name: MDLVertexAttributeNormal, //normal
+                                                      format: .float3,
+                                                      offset: offset,
+                                                      bufferIndex: 0)
+        offset += MemoryLayout<float3>.stride
+        mdlVertDes.attributes[2] = MDLVertexAttribute(name: MDLVertexAttributeTextureCoordinate, //uv
+                                                      format: .float2,
+                                                      offset: offset,
+                                                      bufferIndex: 0)
+        offset += MemoryLayout<float2>.stride
+        mdlVertDes.layouts[0] = MDLVertexBufferLayout(stride: offset)
+        return mdlVertDes
+    }
+    
 }

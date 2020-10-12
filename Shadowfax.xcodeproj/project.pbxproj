@@ -25,6 +25,9 @@
 		48FA932D253237AE0007DB36 /* stag.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 48FA932B253237AE0007DB36 /* stag.mtl */; };
 		48FA933A25327FD80007DB36 /* train.obj in Resources */ = {isa = PBXBuildFile; fileRef = 48FA933825327FD80007DB36 /* train.obj */; };
 		48FA933B25327FD80007DB36 /* train.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 48FA933925327FD80007DB36 /* train.mtl */; };
+		48FA93422532A1F40007DB36 /* sun.png in Resources */ = {isa = PBXBuildFile; fileRef = 48FA93412532A1F40007DB36 /* sun.png */; };
+		48FA934A25337C2F0007DB36 /* planetsphere.obj in Resources */ = {isa = PBXBuildFile; fileRef = 48FA934825337C2F0007DB36 /* planetsphere.obj */; };
+		48FA934B25337C2F0007DB36 /* planetsphere.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 48FA934925337C2F0007DB36 /* planetsphere.mtl */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +71,9 @@
 		48FA932B253237AE0007DB36 /* stag.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = stag.mtl; sourceTree = "<group>"; };
 		48FA933825327FD80007DB36 /* train.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = train.obj; sourceTree = "<group>"; };
 		48FA933925327FD80007DB36 /* train.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = train.mtl; sourceTree = "<group>"; };
+		48FA93412532A1F40007DB36 /* sun.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sun.png; sourceTree = "<group>"; };
+		48FA934825337C2F0007DB36 /* planetsphere.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = planetsphere.obj; sourceTree = "<group>"; };
+		48FA934925337C2F0007DB36 /* planetsphere.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = planetsphere.mtl; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +104,9 @@
 		4833D791253216C10048FEA5 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				48FA934925337C2F0007DB36 /* planetsphere.mtl */,
+				48FA934825337C2F0007DB36 /* planetsphere.obj */,
+				48FA93412532A1F40007DB36 /* sun.png */,
 				48FA933925327FD80007DB36 /* train.mtl */,
 				48FA933825327FD80007DB36 /* train.obj */,
 				48FA932B253237AE0007DB36 /* stag.mtl */,
@@ -305,7 +314,10 @@
 				486918722522D0FD00F25BFD /* LaunchScreen.storyboard in Resources */,
 				48FA932C253237AE0007DB36 /* stag.obj in Resources */,
 				4869186F2522D0FD00F25BFD /* Preview Assets.xcassets in Resources */,
+				48FA934B25337C2F0007DB36 /* planetsphere.mtl in Resources */,
+				48FA93422532A1F40007DB36 /* sun.png in Resources */,
 				4869186C2522D0FD00F25BFD /* Assets.xcassets in Resources */,
+				48FA934A25337C2F0007DB36 /* planetsphere.obj in Resources */,
 				486918B92522F1CC00F25BFD /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
