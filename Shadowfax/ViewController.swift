@@ -22,6 +22,7 @@ class MetalView: MTKView {
             fatalError("Error")
         }
         colorPixelFormat = .bgra8Unorm
+        depthStencilPixelFormat = .depth32Float
         clearColor = MTLClearColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1.0)
         let scene = Scene()
         renderer = Renderer(device: defaultDevice, scene: scene)

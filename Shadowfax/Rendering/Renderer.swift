@@ -18,6 +18,7 @@ class Renderer: NSObject, MTKViewDelegate {
     static var vertexBuffer:MTLBuffer!
     static var projMatrix:float4x4!
     static var timer:Float = 0
+    static var depthStencilState:MTLDepthStencilState!
     
     static var scene:Scene!
     
@@ -29,6 +30,7 @@ class Renderer: NSObject, MTKViewDelegate {
         Renderer.device = device
         Renderer.commandQueue = Renderer.device.makeCommandQueue()
         Renderer.library = Renderer.device.makeDefaultLibrary()
+        Renderer.depthStencilState = Renderer.buildDepthStencilState()
         Renderer.createDefaultRenderPipelineState()
         Renderer.buildScene(scene: scene)
     }
@@ -54,9 +56,16 @@ class Renderer: NSObject, MTKViewDelegate {
         scene.addEntity(mesh: mesh!, uniforms: uniforms, texture: tex)
     }
     
+    static func buildDepthStencilState() -> MTLDepthStencilState? {
+        let descriptor = MTLDepthStencilDescriptor()
+        descriptor.depthCompareFunction = .less
+        descriptor.isDepthWriteEnabled = true
+        return Renderer.device.makeDepthStencilState(descriptor: descriptor)
+    }
+    
     func draw(in view: MTKView) {
         print("Draw call")
-        Renderer.timer += 0.05
+        Renderer.timer += 0.1
         
         guard let drawable = view.currentDrawable,
               let renderPassDescriptor = view.currentRenderPassDescriptor else {
@@ -65,7 +74,7 @@ class Renderer: NSObject, MTKViewDelegate {
         
         let commandBuffer = Renderer.commandQueue.makeCommandBuffer()
         let commandEncoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
-
+        commandEncoder?.setDepthStencilState(Renderer.depthStencilState)
         print(Renderer.scene.entities.count)
         for entity in Renderer.scene.entities {
             
@@ -108,6 +117,7 @@ class Renderer: NSObject, MTKViewDelegate {
         let fragmentFunction = library?.makeFunction(name: fFuncName)
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
         renderPipelineDescriptor.vertexDescriptor = vertDes
+        renderPipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
         renderPipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
         renderPipelineDescriptor.vertexFunction = vertexFunction
         renderPipelineDescriptor.fragmentFunction = fragmentFunction
