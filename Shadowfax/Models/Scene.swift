@@ -12,6 +12,7 @@ import ModelIO
 class Scene {
     
     var entities:[Entity] = []
+    var camera:Camera
     
     func addEntity(name: String = "", mesh: MTKMesh, uniforms: Uniforms, texture: MTLTexture? = nil) {
         let entity = Entity()
@@ -25,8 +26,8 @@ class Scene {
         entities.append(entity)
     }
     
-    init() {
-        
+    init(cam: Camera) {
+        self.camera = cam
     }
     
 }

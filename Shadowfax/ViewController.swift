@@ -24,7 +24,8 @@ class MetalView: MTKView {
         colorPixelFormat = .bgra8Unorm
         depthStencilPixelFormat = .depth32Float
         clearColor = MTLClearColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1.0)
-        let scene = Scene()
+        let cam = Camera(aspect: Float(UIScreen.main.bounds.width) / Float(UIScreen.main.bounds.height))
+        let scene = Scene(cam: cam)
         renderer = Renderer(device: defaultDevice, scene: scene)
         delegate = renderer
     }

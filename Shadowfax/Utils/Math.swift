@@ -87,7 +87,7 @@ extension float4x4 {
     init(rotationX angle: Float) {
         let matrix = float4x4( //Rotate x
             [1, 0, 0, 0],
-            [1, cos(angle), sin(angle), 0],
+            [0, cos(angle), sin(angle), 0],
             [0, -sin(angle), cos(angle), 0],
             [0, 0, 0, 1]
         )

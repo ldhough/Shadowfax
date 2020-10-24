@@ -29,6 +29,7 @@
 		48FA934A25337C2F0007DB36 /* planetsphere.obj in Resources */ = {isa = PBXBuildFile; fileRef = 48FA934825337C2F0007DB36 /* planetsphere.obj */; };
 		48FA934B25337C2F0007DB36 /* planetsphere.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 48FA934925337C2F0007DB36 /* planetsphere.mtl */; };
 		48FA93502534C4090007DB36 /* earth.png in Resources */ = {isa = PBXBuildFile; fileRef = 48FA934F2534C4090007DB36 /* earth.png */; };
+		48FA935925355A1D0007DB36 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48FA935825355A1D0007DB36 /* Camera.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		48FA934825337C2F0007DB36 /* planetsphere.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = planetsphere.obj; sourceTree = "<group>"; };
 		48FA934925337C2F0007DB36 /* planetsphere.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = planetsphere.mtl; sourceTree = "<group>"; };
 		48FA934F2534C4090007DB36 /* earth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = earth.png; sourceTree = "<group>"; };
+		48FA935825355A1D0007DB36 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +198,7 @@
 			children = (
 				486918BE2522F43E00F25BFD /* Entity.swift */,
 				48FA932525322D190007DB36 /* Scene.swift */,
+				48FA935825355A1D0007DB36 /* Camera.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -347,6 +350,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48FA935925355A1D0007DB36 /* Camera.swift in Sources */,
 				486918662522D0FC00F25BFD /* AppDelegate.swift in Sources */,
 				486918C82522F55E00F25BFD /* Shaders.metal in Sources */,
 				48FA932625322D190007DB36 /* Scene.swift in Sources */,
