@@ -9,6 +9,8 @@ import Foundation
 
 class Camera {
     
+    var sensitivity:Float = 0.5
+    
     //View matrix properties
     var position:float3 = [0, 0, 0] {
         didSet { //Property observers on Camera properties allow entire view and model matrices to be directly updated without having to do anything except modifying the properties themselves
@@ -62,10 +64,10 @@ class Camera {
     //pos is translation
     class func makeViewMatrix(pos: float3, rotX: Float, rotY: Float, rotZ: Float) -> float4x4 {
         var viewMatrix:float4x4
-        let rotation:float4x4 = float4x4(rotationX: rotX) * float4x4(rotationY: rotY) * float4x4(rotationZ: rotZ)
+        let rotation:float4x4 = SfaxMath.rotateXYZ(rotX, rotY, rotZ)//float4x4(rotationX: rotX) * float4x4(rotationY: rotY) * float4x4(rotationZ: rotZ)
         let posMatrix = float4x4(translation: pos)
         viewMatrix = posMatrix * rotation//rotation * posMatrix
-        return viewMatrix
+        return viewMatrix.inverse
     }
     
     class func makeProjectionMatrix(fovDegrees: Float, near: Float, far: Float, aspect: Float) -> float4x4 {

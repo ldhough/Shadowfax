@@ -16,8 +16,12 @@ class Renderer: NSObject, MTKViewDelegate {
     static var defaultRenderPipelineState:MTLRenderPipelineState!
     static var uniforms = Uniforms()
     static var vertexBuffer:MTLBuffer!
-    static var projMatrix:float4x4!
-    static var viewMatrix:float4x4!
+    static var projMatrix:float4x4 {
+        scene.camera.projMatrix
+    }
+    static var viewMatrix:float4x4 {
+        scene.camera.viewMatrix
+    }
     static var timer:Float = 0
     static var depthStencilState:MTLDepthStencilState!
     
@@ -45,22 +49,27 @@ class Renderer: NSObject, MTKViewDelegate {
         //SUN
         var uniforms = Uniforms()
         uniforms.modelMatrix = float4x4().identity
-        uniforms.viewMatrix = Renderer.scene.camera.viewMatrix.inverse//float4x4(translation: [0, 0, -30]).inverse //Camera back
-        //let aspectRatio = Float(UIScreen.main.bounds.width) / Float(UIScreen.main.bounds.height)
-        //let projectionMatrix = float4x4(fov: SfaxMath.degreesToRadians(45), near: 0.1, far: 100, aspect: aspectRatio)
-        uniforms.projectionMatrix = Renderer.scene.camera.projMatrix//projectionMatrix
+        uniforms.viewMatrix = Renderer.viewMatrix
+        uniforms.projectionMatrix = Renderer.projMatrix
         let mesh = Models.importModel(Renderer.device, "planetsphere", "obj")
         let tex = Utils.loadTexture(imageName: "sun.png") //tex
         scene.addEntity(name: "Sun", mesh: mesh!, uniforms: uniforms, texture: tex)
         
         //EARTH
         var uniformsEarth = Uniforms()
-        uniformsEarth.modelMatrix = float4x4().identity//float4x4(scaling: [0.5, 0.5, 0.5]) //half size of sun
-        uniformsEarth.viewMatrix = Renderer.scene.camera.viewMatrix.inverse//float4x4(translation: [0, 0, -30]).inverse //Camera back - look into applying just one
-        uniformsEarth.projectionMatrix = Renderer.scene.camera.projMatrix//projectionMatrix
+        uniformsEarth.modelMatrix = float4x4().identity
+        uniformsEarth.viewMatrix = Renderer.viewMatrix
+        uniformsEarth.projectionMatrix = Renderer.projMatrix
         let meshEarth = Models.importModel(Renderer.device, "planetsphere", "obj")
         let texEarth = Utils.loadTexture(imageName: "earth.png")
         scene.addEntity(name: "Earth", mesh: meshEarth!, uniforms: uniformsEarth, texture: texEarth)
+    }
+    
+    static func updateScene(scene: Scene) {
+        for entity in scene.entities {
+            entity.uniforms.viewMatrix = Renderer.viewMatrix
+            entity.uniforms.projectionMatrix = Renderer.projMatrix
+        }
     }
     
     static func buildDepthStencilState() -> MTLDepthStencilState? {
@@ -71,8 +80,9 @@ class Renderer: NSObject, MTKViewDelegate {
     }
     
     func draw(in view: MTKView) {
-        print("Draw call")
+        //print("Draw call")
         Renderer.timer += 0.1
+        Renderer.updateScene(scene: Renderer.scene)
         
         guard let drawable = view.currentDrawable,
               let renderPassDescriptor = view.currentRenderPassDescriptor else {
@@ -82,10 +92,10 @@ class Renderer: NSObject, MTKViewDelegate {
         let commandBuffer = Renderer.commandQueue.makeCommandBuffer()
         let commandEncoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
         commandEncoder?.setDepthStencilState(Renderer.depthStencilState)
-        print(Renderer.scene.entities.count)
+        //print(Renderer.scene.entities.count)
         for entity in Renderer.scene.entities {
             
-            print("For entity in Renderer.scene.entities")
+            //print("For entity in Renderer.scene.entities")
             commandEncoder?.setVertexBuffer(entity.mesh.vertexBuffers[0].buffer, offset: 0, index: 0)
             commandEncoder?.setRenderPipelineState(entity.renderPipelineState)
             var uniforms = entity.uniforms

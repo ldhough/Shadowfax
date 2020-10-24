@@ -24,13 +24,11 @@ struct VertexOut {
 vertex VertexOut vertex_main(const VertexIn in [[stage_in]],
                              constant Uniforms &uniforms [[buffer(1)]],
                              constant float &timer [[buffer(2)]]) {
-    float2 uv;
-    uv.x = in.uv.x;
-    uv.y = in.uv.y;
+    float2 uv = in.uv;
     
     VertexOut vertexOut {
-        .position = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * in.pos//,
-        ,.uv = uv//.color = in.color
+        .position = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * in.pos
+        ,.uv = uv
     };
     return vertexOut;
 }
@@ -40,8 +38,8 @@ fragment float4 fragment_main(VertexOut in [[stage_in]],
                               constant float &timer [[buffer(1)]]) {
     constexpr sampler defaultSampler;
     constexpr sampler textureSampler(filter::linear, address::repeat);
-    float4 color = objTex.sample(defaultSampler, float2(in.uv.x/*2048*/, in.uv.y/*2048*/));
-    return color;//float4(0, 0, 1, 1);//in.color;
+    float4 color = objTex.sample(defaultSampler, float2(in.uv.x, in.uv.y));
+    return color;
 }
 
 //Ghost shader
