@@ -48,28 +48,29 @@ class Renderer: NSObject, MTKViewDelegate {
     static func buildScene(scene: Scene) {
         //SUN
         var uniforms = Uniforms()
-        uniforms.modelMatrix = float4x4().identity
-        uniforms.viewMatrix = Renderer.viewMatrix
-        uniforms.projectionMatrix = Renderer.projMatrix
         let mesh = Models.importModel(Renderer.device, "planetsphere", "obj")
         let tex = Utils.loadTexture(imageName: "sun.png") //tex
-        scene.addEntity(name: "Sun", mesh: mesh!, uniforms: uniforms, texture: tex)
+        scene.addEntity(name: "Sun", mesh: mesh!, uniforms: &uniforms, texture: tex, updateUniforms: { uniforms in
+            uniforms.viewMatrix = Renderer.viewMatrix
+            uniforms.projectionMatrix = Renderer.projMatrix
+            let notUpsideDown = float4x4(rotationZ: SfaxMath.degreesToRadians(180.0))
+            uniforms.modelMatrix = notUpsideDown * float4x4(rotationY: SfaxMath.degreesToRadians(Renderer.timer*10.0))
+        })
         
         //EARTH
         var uniformsEarth = Uniforms()
-        uniformsEarth.modelMatrix = float4x4().identity
-        uniformsEarth.viewMatrix = Renderer.viewMatrix
-        uniformsEarth.projectionMatrix = Renderer.projMatrix
         let meshEarth = Models.importModel(Renderer.device, "planetsphere", "obj")
         let texEarth = Utils.loadTexture(imageName: "earth.png")
-        scene.addEntity(name: "Earth", mesh: meshEarth!, uniforms: uniformsEarth, texture: texEarth)
-    }
-    
-    static func updateScene(scene: Scene) {
-        for entity in scene.entities {
-            entity.uniforms.viewMatrix = Renderer.viewMatrix
-            entity.uniforms.projectionMatrix = Renderer.projMatrix
-        }
+        scene.addEntity(name: "Earth", mesh: meshEarth!, uniforms: &uniformsEarth, texture: texEarth, updateUniforms: { uniforms in
+            uniforms.viewMatrix = Renderer.viewMatrix
+            uniforms.projectionMatrix = Renderer.projMatrix
+            let scale = float4x4(scaling: [0.5, 0.5, 0.5])
+            let moveOut = float4x4(translation: [4, 0, 0])
+            let notUpsideDown = float4x4(rotationZ: SfaxMath.degreesToRadians(180.0))
+            let aroundSun = float4x4(rotationY: SfaxMath.degreesToRadians(Renderer.timer*5.0))
+            let earthSpin = float4x4(rotationY: SfaxMath.degreesToRadians(Renderer.timer*20.0))
+            uniforms.modelMatrix =  notUpsideDown * aroundSun * moveOut * earthSpin * scale
+        })
     }
     
     static func buildDepthStencilState() -> MTLDepthStencilState? {
@@ -80,9 +81,7 @@ class Renderer: NSObject, MTKViewDelegate {
     }
     
     func draw(in view: MTKView) {
-        //print("Draw call")
         Renderer.timer += 0.1
-        Renderer.updateScene(scene: Renderer.scene)
         
         guard let drawable = view.currentDrawable,
               let renderPassDescriptor = view.currentRenderPassDescriptor else {
@@ -92,30 +91,15 @@ class Renderer: NSObject, MTKViewDelegate {
         let commandBuffer = Renderer.commandQueue.makeCommandBuffer()
         let commandEncoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
         commandEncoder?.setDepthStencilState(Renderer.depthStencilState)
-        //print(Renderer.scene.entities.count)
+        
+        var index = 0
         for entity in Renderer.scene.entities {
             
-            //print("For entity in Renderer.scene.entities")
+            Renderer.scene.entitiesModify[index](&entity.uniforms)
+
             commandEncoder?.setVertexBuffer(entity.mesh.vertexBuffers[0].buffer, offset: 0, index: 0)
             commandEncoder?.setRenderPipelineState(entity.renderPipelineState)
             var uniforms = entity.uniforms
-            if entity.name == "Sun" { //hacky temp solution
-                let notUpsideDown = float4x4(rotationZ: SfaxMath.degreesToRadians(180.0))
-                uniforms?.modelMatrix = notUpsideDown * float4x4(rotationY: SfaxMath.degreesToRadians(Renderer.timer*10.0))//.inverse
-            }
-            if entity.name == "Earth" {
-                let scale = float4x4(scaling: [0.5, 0.5, 0.5])
-                let moveOut = float4x4(translation: [4, 0, 0])
-                let notUpsideDown = float4x4(rotationZ: SfaxMath.degreesToRadians(180.0))
-                let aroundSun = float4x4(rotationY: SfaxMath.degreesToRadians(Renderer.timer*5.0))
-                let earthSpin = float4x4(rotationY: SfaxMath.degreesToRadians(Renderer.timer*20.0))
-                uniforms?.modelMatrix =  notUpsideDown * aroundSun * moveOut * earthSpin * scale
-                //1) scale
-                //2) make earth rotate on its axis
-                //3) move earth away from sun
-                //4) move earth around sun
-                //5) make earth not upside down (for some reason texture is rendered onto sphere upside down
-            }
             
             commandEncoder?.setVertexBytes(&uniforms, length: MemoryLayout<Uniforms>.stride, index: 1)
             commandEncoder?.setVertexBytes(&Renderer.timer, length: MemoryLayout<Float>.stride, index: 2)
@@ -130,6 +114,7 @@ class Renderer: NSObject, MTKViewDelegate {
                                                       indexBuffer: submesh.indexBuffer.buffer,
                                                       indexBufferOffset: 0)
             }
+            index += 1
         }
         
         commandEncoder?.endEncoding()

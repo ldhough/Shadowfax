@@ -15,7 +15,8 @@ class Scene {
     var entitiesModify:[(inout Uniforms) -> Void] = []
     var camera:Camera
     
-    func addEntity(name: String = "", mesh: MTKMesh, uniforms: inout Uniforms, texture: MTLTexture? = nil) {
+    func addEntity(name: String = "", mesh: MTKMesh, uniforms: inout Uniforms, texture: MTLTexture? = nil,
+                   updateUniforms: @escaping (inout Uniforms) -> Void) {
         let entity = Entity()
         entity.mesh = mesh
         entity.renderPipelineState = Renderer.createModelRenderPipelineState(mesh: mesh)
@@ -24,7 +25,9 @@ class Scene {
         if texture != nil {
             entity.tex = texture
         }
+        updateUniforms(&uniforms)
         entities.append(entity)
+        entitiesModify.append(updateUniforms)
     }
     
     init(cam: Camera) {
