@@ -12,9 +12,10 @@ import ModelIO
 class Scene {
     
     var entities:[Entity] = []
+    var entitiesModify:[(inout Uniforms) -> Void] = []
     var camera:Camera
     
-    func addEntity(name: String = "", mesh: MTKMesh, uniforms: Uniforms, texture: MTLTexture? = nil) {
+    func addEntity(name: String = "", mesh: MTKMesh, uniforms: inout Uniforms, texture: MTLTexture? = nil) {
         let entity = Entity()
         entity.mesh = mesh
         entity.renderPipelineState = Renderer.createModelRenderPipelineState(mesh: mesh)
