@@ -26,6 +26,15 @@ class SfaxMath {
         return float4x4(rotationX: angleX) * float4x4(rotationY: angleY) * float4x4(rotationZ: angleZ)
     }
     
+    //Get upper left part of a 4x4 matrix
+    static func upperLeft(_ mat:float4x4) -> float3x3 {
+        return float3x3([
+            [mat[0].x, mat[1].x, mat[2].x],
+            [mat[0].y, mat[1].y, mat[2].y],
+            [mat[0].z, mat[1].z, mat[2].z]
+        ])
+    }
+    
 }
 
 extension float4 {

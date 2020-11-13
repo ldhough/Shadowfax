@@ -20,6 +20,7 @@
 		486918D02522F5E700F25BFD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486918CF2522F5E700F25BFD /* ViewController.swift */; };
 		486918D82522F61300F25BFD /* ControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486918D72522F61300F25BFD /* ControlView.swift */; };
 		486918E02523008D00F25BFD /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486918DF2523008D00F25BFD /* Utils.swift */; };
+		4869B580255E10D1007D5C6C /* Light.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4869B57F255E10D1007D5C6C /* Light.swift */; };
 		48FA932625322D190007DB36 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48FA932525322D190007DB36 /* Scene.swift */; };
 		48FA932C253237AE0007DB36 /* stag.obj in Resources */ = {isa = PBXBuildFile; fileRef = 48FA932A253237AE0007DB36 /* stag.obj */; };
 		48FA932D253237AE0007DB36 /* stag.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 48FA932B253237AE0007DB36 /* stag.mtl */; };
@@ -68,6 +69,7 @@
 		486918D72522F61300F25BFD /* ControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlView.swift; sourceTree = "<group>"; };
 		486918DF2523008D00F25BFD /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		486918E42523D0A400F25BFD /* Shadowfax-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Shadowfax-Bridging-Header.h"; sourceTree = "<group>"; };
+		4869B57F255E10D1007D5C6C /* Light.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Light.swift; sourceTree = "<group>"; };
 		48FA932525322D190007DB36 /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
 		48FA932A253237AE0007DB36 /* stag.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = stag.obj; sourceTree = "<group>"; };
 		48FA932B253237AE0007DB36 /* stag.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = stag.mtl; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 				486918BE2522F43E00F25BFD /* Entity.swift */,
 				48FA932525322D190007DB36 /* Scene.swift */,
 				48FA935825355A1D0007DB36 /* Camera.swift */,
+				4869B57F255E10D1007D5C6C /* Light.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -356,6 +359,7 @@
 				48FA932625322D190007DB36 /* Scene.swift in Sources */,
 				486918E02523008D00F25BFD /* Utils.swift in Sources */,
 				486918682522D0FC00F25BFD /* SceneDelegate.swift in Sources */,
+				4869B580255E10D1007D5C6C /* Light.swift in Sources */,
 				486918BF2522F43E00F25BFD /* Entity.swift in Sources */,
 				486918AC2522EDC100F25BFD /* Renderer.swift in Sources */,
 				486918D02522F5E700F25BFD /* ViewController.swift in Sources */,

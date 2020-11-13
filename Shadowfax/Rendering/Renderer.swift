@@ -27,9 +27,13 @@ class Renderer: NSObject, MTKViewDelegate {
     
     static var scene:Scene!
     
+    static var sunlight:Light! //temporary
+    
     init(device: MTLDevice, scene: Scene) {
         print("Renderer init")
         super.init()
+        
+        Renderer.sunlight = Lighting.makePointLight()
         
         Renderer.scene = scene
         Renderer.scene.camera.position = [0, 0, -30] //back 30
@@ -93,9 +97,11 @@ class Renderer: NSObject, MTKViewDelegate {
         commandEncoder?.setDepthStencilState(Renderer.depthStencilState)
         
         var index = 0
+        commandEncoder?.setFragmentBytes(&Renderer.sunlight, length: MemoryLayout<Light>.stride, index: 2)
         for entity in Renderer.scene.entities {
             
             Renderer.scene.entitiesModify[index](&entity.uniforms)
+            entity.uniforms.normalMatrix = SfaxMath.upperLeft(entity.uniforms.modelMatrix) //Set normal matrix
 
             commandEncoder?.setVertexBuffer(entity.mesh.vertexBuffers[0].buffer, offset: 0, index: 0)
             commandEncoder?.setRenderPipelineState(entity.renderPipelineState)
@@ -105,6 +111,14 @@ class Renderer: NSObject, MTKViewDelegate {
             commandEncoder?.setVertexBytes(&Renderer.timer, length: MemoryLayout<Float>.stride, index: 2)
             commandEncoder?.setFragmentBytes(&Renderer.timer, length: MemoryLayout<Float>.stride, index: 1)
             commandEncoder?.setFragmentTexture(entity.tex!, index: 0)
+            
+            if entity.name == "Sun" { //hacky temp solution for testing
+                var x = true
+                commandEncoder?.setFragmentBytes(&x, length: MemoryLayout<Bool>.stride, index: 3)
+            } else {
+                var x = false
+                commandEncoder?.setFragmentBytes(&x, length: MemoryLayout<Bool>.stride, index: 3)
+            }
             
             for submesh in entity.mesh.submeshes {
                 

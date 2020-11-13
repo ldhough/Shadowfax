@@ -18,6 +18,14 @@ typedef struct {
     matrix_float4x4 modelMatrix; //Model
     matrix_float4x4 viewMatrix; //Camera
     matrix_float4x4 projectionMatrix;
+    matrix_float3x3 normalMatrix;
 } Uniforms;
+
+typedef struct {
+    vector_float3 position;
+    vector_float3 color;
+    float intensity;
+    vector_float3 attenuation;
+} Light;
 
 #endif /* Shadowfax_Bridging_Header_h */
