@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+/*
+ SwiftUI UI components to use for buttons/interaction with scenes as well as supporting classes & structs
+ */
+
 class CONSTANTS {
     static let screen_size = UIScreen.main.bounds.size
     static let native_size = UIScreen.main.nativeBounds.size

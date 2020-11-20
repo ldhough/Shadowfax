@@ -44,8 +44,11 @@ class MetalView: MTKView {
     var panStart:CGPoint!
     var lastPanPoint:CGPoint!
     
-    var lastRotX:Float = 0.0
-    var lastRotY:Float = 0.0
+    var lastRotX:Float = 0.0 //unused rn
+    var lastRotY:Float = 0.0 //unused rn
+    
+    var lastHorizAngle:CGFloat = 0.0 //unused rn
+    var lastVertAngle:CGFloat = 0.0 //unused rn
     
     //Modifies camera view matrix based on percent of screen that is traversed between events and a sensitivity factor
     @objc func handlePan(gesture: UIPanGestureRecognizer) {
@@ -55,22 +58,20 @@ class MetalView: MTKView {
         if gesture.state == .began {
             panStart = gesture.location(in: self)
             lastPanPoint = panStart
-            //lastRotX = self.scene.camera.rotation.x
-            //lastRotY = self.scene.camera.rotation.y
         } else if gesture.state == .ended {
             panStart = nil
             lastPanPoint = nil
         } else {
+//            lastPanPoint = gesture.location(in: self)
             let screenWidth = UIScreen.main.bounds.width
             let screenHeight = UIScreen.main.bounds.height
             let distanceTraveledHoriz = gesture.location(in: self).x-lastPanPoint.x
             let distanceTraveledVert = gesture.location(in: self).y-lastPanPoint.y
+            lastPanPoint = gesture.location(in: self)
             let percentTraveledHoriz = abs(distanceTraveledHoriz) / screenWidth
             let percentTraveledVert = abs(distanceTraveledVert) / screenHeight
             let horizAngle = (distanceTraveledHoriz > 0 ? 180*sensitivity : -180*sensitivity) * percentTraveledHoriz
             let vertAngle = (distanceTraveledVert > 0 ? 180*sensitivity : -180*sensitivity) * percentTraveledVert
-            print(SfaxMath.degreesToRadians(Float(horizAngle)))
-            print(SfaxMath.degreesToRadians(Float(vertAngle)))
             self.scene.camera.rotation = [SfaxMath.degreesToRadians(Float(vertAngle)) + self.scene.camera.rotation.x,
                                           SfaxMath.degreesToRadians(Float(horizAngle)) + self.scene.camera.rotation.y,
                                           0]
