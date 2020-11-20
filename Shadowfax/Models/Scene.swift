@@ -11,23 +11,33 @@ import ModelIO
 
 class Scene {
     
+    var lights:[Light] = []
     var entities:[Entity] = []
     var entitiesModify:[(inout Uniforms) -> Void] = []
     var camera:Camera
     
     func addEntity(name: String = "", mesh: MTKMesh, uniforms: inout Uniforms, texture: MTLTexture? = nil,
+                   obeysLight: Bool = true, isLight: Bool = false,
                    updateUniforms: @escaping (inout Uniforms) -> Void) {
         let entity = Entity()
         entity.mesh = mesh
         entity.renderPipelineState = Renderer.createModelRenderPipelineState(mesh: mesh)
         entity.uniforms = uniforms
         entity.name = name
+        
+        entity.obeysLight = obeysLight
+        if isLight {
+            let light = Lighting.makePointLight()
+            lights.append(light)
+        }
+        
         if texture != nil {
             entity.tex = texture
         }
         updateUniforms(&uniforms)
         entities.append(entity)
         entitiesModify.append(updateUniforms)
+        
     }
     
     init(cam: Camera) {

@@ -34,6 +34,7 @@ vertex VertexOut vertex_main(const VertexIn in [[stage_in]],
         ,.normal = uniforms.normalMatrix * in.normal
         ,.uv = uv
     };
+    
     return vertexOut;
 }
 
@@ -41,22 +42,16 @@ fragment float4 fragment_main(VertexOut in [[stage_in]],
                               texture2d<float> objTex [[texture(0)]],
                               constant float &timer [[buffer(1)]],
                               constant Light &sunlight [[buffer(2)]],
-                              constant bool &lightSource [[buffer(3)]]) {
+                              constant bool &obeyLighting [[buffer(3)]]) { //True for normal objects, false for light sources or other objects we want full illumination on
     constexpr sampler defaultSampler;
-    //constexpr sampler textureSampler(filter::linear, address::repeat);
+
     float4 color = objTex.sample(defaultSampler, float2(in.uv.x, in.uv.y));
-    if (!lightSource) {
+    if (obeyLighting) {
+        
         float3 lightDir = normalize(in.worldPos - sunlight.position);
         float3 normalDir = normalize(in.normal);
         float difIntensity = saturate(-dot(lightDir, normalDir));
         float3 newColor = sunlight.color * float3(color.x, color.y, color.z) * difIntensity;
-        //newColor *= 100;
-    //    float3 lightDir = normalize(-sunlight.position);
-    //    float3 normalDir = normalize(in.normal);
-    //    float difIntensity = saturate(-dot(lightDir, normalDir));
-    //    float3 diffuseColor = 0;
-    //    diffuseColor += sunlight.color * float3(color.x, color.y, color.z) * difIntensity;
-    //    color = float4(diffuseColor, 1);
         
         if (newColor.r < 0.1 && newColor.g < 0.1 && newColor.b < 0.1) {
             newColor = float3(color.r * 0.1, color.g * 0.1, color.b * 0.1);

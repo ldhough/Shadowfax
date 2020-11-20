@@ -27,13 +27,13 @@ class Renderer: NSObject, MTKViewDelegate {
     
     static var scene:Scene!
     
-    static var sunlight:Light! //temporary
+    //static var sunlight:Light! //temporary
     
     init(device: MTLDevice, scene: Scene) {
         print("Renderer init")
         super.init()
         
-        Renderer.sunlight = Lighting.makePointLight()
+        //Renderer.sunlight = Lighting.makePointLight()
         
         Renderer.scene = scene
         Renderer.scene.camera.position = [0, 0, -30] //back 30
@@ -54,7 +54,8 @@ class Renderer: NSObject, MTKViewDelegate {
         var uniforms = Uniforms()
         let mesh = Models.importModel(Renderer.device, "planetsphere", "obj")
         let tex = Utils.loadTexture(imageName: "sun.png") //tex
-        scene.addEntity(name: "Sun", mesh: mesh!, uniforms: &uniforms, texture: tex, updateUniforms: { uniforms in
+        scene.addEntity(name: "Sun", mesh: mesh!, uniforms: &uniforms, texture: tex, obeysLight: false, isLight: true,
+                        updateUniforms: { uniforms in
             uniforms.viewMatrix = Renderer.viewMatrix
             uniforms.projectionMatrix = Renderer.projMatrix
             let notUpsideDown = float4x4(rotationZ: SfaxMath.degreesToRadians(180.0))
@@ -97,7 +98,7 @@ class Renderer: NSObject, MTKViewDelegate {
         commandEncoder?.setDepthStencilState(Renderer.depthStencilState)
         
         var index = 0
-        commandEncoder?.setFragmentBytes(&Renderer.sunlight, length: MemoryLayout<Light>.stride, index: 2)
+        commandEncoder?.setFragmentBytes(&Renderer.scene.lights[0], length: MemoryLayout<Light>.stride, index: 2)
         for entity in Renderer.scene.entities {
             
             Renderer.scene.entitiesModify[index](&entity.uniforms)
@@ -112,13 +113,13 @@ class Renderer: NSObject, MTKViewDelegate {
             commandEncoder?.setFragmentBytes(&Renderer.timer, length: MemoryLayout<Float>.stride, index: 1)
             commandEncoder?.setFragmentTexture(entity.tex!, index: 0)
             
-            if entity.name == "Sun" { //hacky temp solution for testing
-                var x = true
-                commandEncoder?.setFragmentBytes(&x, length: MemoryLayout<Bool>.stride, index: 3)
-            } else {
-                var x = false
-                commandEncoder?.setFragmentBytes(&x, length: MemoryLayout<Bool>.stride, index: 3)
-            }
+            //if entity.obeysLight { //hacky temp solution for testing
+                //var obeyLighting = false
+            commandEncoder?.setFragmentBytes(&entity.obeysLight, length: MemoryLayout<Bool>.stride, index: 3)
+//            } else {
+//
+//                commandEncoder?.setFragmentBytes(&x, length: MemoryLayout<Bool>.stride, index: 3)
+//            }
             
             for submesh in entity.mesh.submeshes {
                 

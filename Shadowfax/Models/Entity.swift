@@ -15,6 +15,7 @@ class Entity {
     var tex:MTLTexture!
     var renderPipelineState:MTLRenderPipelineState!
     var uniforms:Uniforms!
+    var obeysLight:Bool!
 }
 
 class Models {
