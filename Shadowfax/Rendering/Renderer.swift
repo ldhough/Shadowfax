@@ -76,6 +76,16 @@ class Renderer: NSObject, MTKViewDelegate {
             let earthSpin = float4x4(rotationY: SfaxMath.degreesToRadians(Renderer.timer*20.0))
             uniforms.modelMatrix =  notUpsideDown * aroundSun * moveOut * earthSpin * scale
         })
+        
+        var uniformsSky = Uniforms()
+        let meshSky = Models.importModel(Renderer.device, "planetsphere", "obj")
+        let texSky = Utils.loadTexture(imageName: "StarsInSpace.png")
+        scene.addEntity(name: "Skybox", mesh: meshSky!, uniforms: &uniformsSky, texture: texSky, obeysLight: false, isLight: false, updateUniforms: { uniforms in
+            uniforms.viewMatrix = Renderer.viewMatrix
+            uniforms.projectionMatrix = Renderer.projMatrix
+            let scale = float4x4(scaling: [40.0, 40.0, 40.0])
+            uniforms.modelMatrix = scale
+        })
     }
     
     static func buildDepthStencilState() -> MTLDepthStencilState? {
@@ -101,7 +111,7 @@ class Renderer: NSObject, MTKViewDelegate {
         commandEncoder?.setFragmentBytes(&Renderer.scene.lights[0], length: MemoryLayout<Light>.stride, index: 2)
         for entity in Renderer.scene.entities {
             
-            Renderer.scene.entitiesModify[index](&entity.uniforms)
+            Renderer.scene.entitiesModify[index](&entity.uniforms) //Calls update function associated w/ entity
             entity.uniforms.normalMatrix = SfaxMath.upperLeft(entity.uniforms.modelMatrix) //Set normal matrix
 
             commandEncoder?.setVertexBuffer(entity.mesh.vertexBuffers[0].buffer, offset: 0, index: 0)
@@ -113,13 +123,7 @@ class Renderer: NSObject, MTKViewDelegate {
             commandEncoder?.setFragmentBytes(&Renderer.timer, length: MemoryLayout<Float>.stride, index: 1)
             commandEncoder?.setFragmentTexture(entity.tex!, index: 0)
             
-            //if entity.obeysLight { //hacky temp solution for testing
-                //var obeyLighting = false
             commandEncoder?.setFragmentBytes(&entity.obeysLight, length: MemoryLayout<Bool>.stride, index: 3)
-//            } else {
-//
-//                commandEncoder?.setFragmentBytes(&x, length: MemoryLayout<Bool>.stride, index: 3)
-//            }
             
             for submesh in entity.mesh.submeshes {
                 

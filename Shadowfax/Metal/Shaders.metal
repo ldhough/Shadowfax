@@ -10,8 +10,8 @@
 using namespace metal;
 
 struct VertexIn {
-    float4 pos [[attribute(0)]]; //should be float3?
-    float3 normal [[attribute(1)]]; //normal
+    float4 pos [[attribute(0)]];
+    float3 normal [[attribute(1)]];
     float2 uv [[attribute(2)]];
 };
 
@@ -53,7 +53,7 @@ fragment float4 fragment_main(VertexOut in [[stage_in]],
         float difIntensity = saturate(-dot(lightDir, normalDir));
         float3 newColor = sunlight.color * float3(color.x, color.y, color.z) * difIntensity;
         
-        if (newColor.r < 0.1 && newColor.g < 0.1 && newColor.b < 0.1) {
+        if (newColor.r < 0.1 && newColor.g < 0.1 && newColor.b < 0.1) { //Ambient lighting
             newColor = float3(color.r * 0.1, color.g * 0.1, color.b * 0.1);
         }
         
