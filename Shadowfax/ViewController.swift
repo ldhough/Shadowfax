@@ -14,8 +14,14 @@ class MetalView: MTKView {
     
     var renderer:Renderer!
     var scene:Scene!
+    let buttonActions:ButtonActions
     
-    init() {
+//    func setupButtonActions() {
+//
+//    }
+    
+    init(buttonActions: ButtonActions) {
+        self.buttonActions = buttonActions
         print("MetalView init")
         super.init(frame: .zero, device: MTLCreateSystemDefaultDevice())
         guard let defaultDevice = device else {
@@ -30,6 +36,8 @@ class MetalView: MTKView {
         renderer = Renderer(device: defaultDevice, scene: scene)
         delegate = renderer
         addGestureRecognizers(view: self)
+        self.buttonActions.objects["camera"] = cam
+        //self.setupButtonActions()
     }
     
     required init(coder: NSCoder) {
@@ -82,8 +90,10 @@ class MetalView: MTKView {
 
 struct SwiftUIMetalView: UIViewRepresentable {
     
+    let buttonActions:ButtonActions
+    
     func makeUIView(context: Context) -> MTKView {
-        return MetalView()
+        return MetalView(buttonActions: self.buttonActions)
     }
     
     func updateUIView(_ uiView: MTKView, context: Context) {

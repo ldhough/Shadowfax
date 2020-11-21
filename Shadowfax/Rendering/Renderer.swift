@@ -77,6 +77,31 @@ class Renderer: NSObject, MTKViewDelegate {
             uniforms.modelMatrix =  notUpsideDown * aroundSun * moveOut * earthSpin * scale
         })
         
+        var uniformsMoon = Uniforms()
+        let meshMoon = Models.importModel(Renderer.device, "planetsphere", "obj")
+        let texMoon = Utils.loadTexture(imageName: "moon.png")
+        scene.addEntity(name: "Moon", mesh: meshMoon!, uniforms: &uniformsMoon, texture: texMoon, updateUniforms: { uniforms in
+            uniforms.viewMatrix = Renderer.viewMatrix
+            uniforms.projectionMatrix = Renderer.projMatrix
+            let scale = float4x4(scaling: [0.3, 0.3, 0.3])
+            let moveOut = float4x4(translation: [6, 0, 0])
+            let moveOut2 = float4x4(translation: [1, 0, 0])
+            let moveIn = float4x4(translation: [-6, 0, 0])
+            let moveIn2 = float4x4(translation: [-2, 0, 0])
+            let notUpsideDown = float4x4(rotationZ: SfaxMath.degreesToRadians(180.0))
+            let aroundSun = float4x4(rotationY: SfaxMath.degreesToRadians(Renderer.timer*5.0))
+            let aroundEarth = float4x4(rotationY: SfaxMath.degreesToRadians(Renderer.timer*15.0))
+            let aroundSunBack = float4x4(rotationY: -SfaxMath.degreesToRadians(Renderer.timer*5.0))
+            //let earthSpin = float4x4(rotationY: SfaxMath.degreesToRadians(Renderer.timer*20.0))
+//            uniforms.modelMatrix =  notUpsideDown * aroundSun * moveOut * scale //STICKS TO EARTH
+            
+//            uniforms.modelMatrix = notUpsideDown * aroundSun * moveOut * aroundEarth * moveOut2 * scale //GETTING CLOSE
+//            uniforms.modelMatrix = notUpsideDown * aroundSun * moveOut * moveIn2 * aroundEarth * moveOut2 * scale //VERY GOOD w/ moveIn2 -2
+            //uniforms.modelMatrix = notUpsideDown * moveIn2 * aroundSun * moveOut * aroundEarth * moveOut2 * scale
+            uniforms.modelMatrix = notUpsideDown * aroundSun * moveOut * moveIn2 * aroundEarth * moveOut2 * scale
+            
+        })
+        
         var uniformsSky = Uniforms()
         let meshSky = Models.importModel(Renderer.device, "planetsphere", "obj")
         let texSky = Utils.loadTexture(imageName: "StarsInSpace.png")

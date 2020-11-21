@@ -42,7 +42,7 @@ fragment float4 fragment_main(VertexOut in [[stage_in]],
                               texture2d<float> objTex [[texture(0)]],
                               constant float &timer [[buffer(1)]],
                               constant Light &sunlight [[buffer(2)]],
-                              constant bool &obeyLighting [[buffer(3)]]) { //True for normal objects, false for light sources or other objects we want full illumination on
+                              constant bool &obeyLighting [[buffer(3)]]) { //True for ordinary objects, false for light sources or other objects we want full illumination on
     constexpr sampler defaultSampler;
 
     float4 color = objTex.sample(defaultSampler, float2(in.uv.x, in.uv.y));
@@ -60,6 +60,13 @@ fragment float4 fragment_main(VertexOut in [[stage_in]],
         color = float4(newColor, 1);
     }
     return color;
+}
+
+kernel void compute(texture2d<float, access::read> inTex [[texture(0)]],
+                            texture2d<float, access::write> outMap [[texture(1)]],
+                            uint2 id [[thread_position_in_grid]]) {
+    float4 color = inTex.read(id);
+    outMap.write(color, id);
 }
 
 //Ghost shader

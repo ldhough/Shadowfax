@@ -18,19 +18,23 @@ class CONSTANTS {
 
 class ButtonActions {
     
-    static func up() {
+    var objects:[String : Any] = [:]
+    //var buttonFunctions:[String : ((Any) -> Void, Any)] = [:]
+    
+    func up() {
+        
         print("Up")
     }
     
-    static func right() {
+    func right() {
         print("Right")
     }
     
-    static func left() {
+    func left() {
         print("Left")
     }
     
-    static func down() {
+    func down() {
         print("Down")
     }
     
@@ -55,6 +59,8 @@ enum CardinalDirections {
 }
 
 struct ControlView: View {
+    
+    let buttonActions:ButtonActions
     
     func arrowKey(buttonSize: CGSize = CGSize(width: CONSTANTS.screen_size.width/10,
                                               height: CONSTANTS.screen_size.width/10),
@@ -84,18 +90,18 @@ struct ControlView: View {
             Spacer()
             HStack {
                 arrowKey(arrowDirection: .top) {
-                    ButtonActions.up()
+                    self.buttonActions.up()
                 }
             }
             HStack {
                 arrowKey(arrowDirection: .left) {
-                    ButtonActions.left()
+                    self.buttonActions.left()
                 }.padding([.bottom])
                 arrowKey(arrowDirection: .bottom) {
-                    ButtonActions.down()
+                    self.buttonActions.down()
                 }.padding([.bottom])
                 arrowKey(arrowDirection: .right) {
-                    ButtonActions.right()
+                    self.buttonActions.right()
                 }.padding([.bottom])
             }
         }.padding([.trailing])
@@ -103,11 +109,12 @@ struct ControlView: View {
     
     var body: some View {
         ZStack {
-            SwiftUIMetalView()
+            SwiftUIMetalView(buttonActions: self.buttonActions)
             //Color.white
             HStack {
+//                Spacer()
+                arrowKeys().padding()
                 Spacer()
-                arrowKeys()
             }
         }.ignoresSafeArea()
     }
