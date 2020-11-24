@@ -15,13 +15,14 @@ class Scene {
     var entities:[Entity] = []
     var entitiesModify:[(inout Uniforms) -> Void] = []
     var camera:Camera
+    var renderer:Renderer!
     
     func addEntity(name: String = "", mesh: MTKMesh, uniforms: inout Uniforms, texture: MTLTexture? = nil,
                    obeysLight: Bool = true, isLight: Bool = false,
                    updateUniforms: @escaping (inout Uniforms) -> Void) {
         let entity = Entity()
         entity.mesh = mesh
-        entity.renderPipelineState = Renderer.createModelRenderPipelineState(mesh: mesh)
+        entity.renderPipelineState = renderer.createModelRenderPipelineState(mesh: mesh)
         entity.uniforms = uniforms
         entity.name = name
         

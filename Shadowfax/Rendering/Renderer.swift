@@ -10,22 +10,22 @@ import ModelIO
 
 class Renderer: NSObject, MTKViewDelegate {
     
-    static var device:MTLDevice!
-    static var commandQueue:MTLCommandQueue!
-    static var library:MTLLibrary!
-    static var defaultRenderPipelineState:MTLRenderPipelineState!
-    static var uniforms = Uniforms()
-    static var vertexBuffer:MTLBuffer!
-    static var projMatrix:float4x4 {
+    var device:MTLDevice!
+    var commandQueue:MTLCommandQueue!
+    var library:MTLLibrary!
+    var defaultRenderPipelineState:MTLRenderPipelineState!
+    var uniforms = Uniforms()
+    var vertexBuffer:MTLBuffer!
+    var projMatrix:float4x4 {
         scene.camera.projMatrix
     }
-    static var viewMatrix:float4x4 {
+    var viewMatrix:float4x4 {
         scene.camera.viewMatrix
     }
-    static var timer:Float = 0
-    static var depthStencilState:MTLDepthStencilState!
+    var timer:Float = 0
+    var depthStencilState:MTLDepthStencilState!
     
-    static var scene:Scene!
+    var scene:Scene!
     
     //static var sunlight:Light! //temporary
     
@@ -35,64 +35,65 @@ class Renderer: NSObject, MTKViewDelegate {
         
         //Renderer.sunlight = Lighting.makePointLight()
         
-        Renderer.scene = scene
-        Renderer.scene.camera.position = [0, 0, -30] //back 30
-        Renderer.device = device
-        Renderer.commandQueue = Renderer.device.makeCommandQueue()
-        Renderer.library = Renderer.device.makeDefaultLibrary()
-        Renderer.depthStencilState = Renderer.buildDepthStencilState()
-        Renderer.createDefaultRenderPipelineState()
-        Renderer.buildScene(scene: scene)
+        self.scene = scene
+        self.scene.renderer = self
+        self.scene.camera.position = [0, 0, -30] //back 30
+        self.device = device
+        self.commandQueue = self.device.makeCommandQueue()
+        self.library = self.device.makeDefaultLibrary()
+        self.depthStencilState = self.buildDepthStencilState()
+        self.createDefaultRenderPipelineState()
+        self.buildScene(scene: scene)
     }
     
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
 
     }
     
-    static func buildScene(scene: Scene) {
+    func buildScene(scene: Scene) {
         //SUN
         var uniforms = Uniforms()
-        let mesh = Models.importModel(Renderer.device, "planetsphere", "obj")
-        let tex = Utils.loadTexture(imageName: "sun.png") //tex
+        let mesh = Models.importModel(self.device, "planetsphere", "obj")
+        let tex = Utils.loadTexture(imageName: "sun.png", device: self.device) //tex
         scene.addEntity(name: "Sun", mesh: mesh!, uniforms: &uniforms, texture: tex, obeysLight: false, isLight: true,
                         updateUniforms: { uniforms in
-            uniforms.viewMatrix = Renderer.viewMatrix
-            uniforms.projectionMatrix = Renderer.projMatrix
+            uniforms.viewMatrix = self.viewMatrix
+            uniforms.projectionMatrix = self.projMatrix
             let notUpsideDown = float4x4(rotationZ: SfaxMath.degreesToRadians(180.0))
-            uniforms.modelMatrix = notUpsideDown * float4x4(rotationY: SfaxMath.degreesToRadians(Renderer.timer*10.0))
+            uniforms.modelMatrix = notUpsideDown * float4x4(rotationY: SfaxMath.degreesToRadians(self.timer*10.0))
         })
         
         //EARTH
         var uniformsEarth = Uniforms()
-        let meshEarth = Models.importModel(Renderer.device, "planetsphere", "obj")
-        let texEarth = Utils.loadTexture(imageName: "earth.png")
+        let meshEarth = Models.importModel(self.device, "planetsphere", "obj")
+        let texEarth = Utils.loadTexture(imageName: "earth.png", device: self.device)
         scene.addEntity(name: "Earth", mesh: meshEarth!, uniforms: &uniformsEarth, texture: texEarth, updateUniforms: { uniforms in
-            uniforms.viewMatrix = Renderer.viewMatrix
-            uniforms.projectionMatrix = Renderer.projMatrix
+            uniforms.viewMatrix = self.viewMatrix
+            uniforms.projectionMatrix = self.projMatrix
             let scale = float4x4(scaling: [0.5, 0.5, 0.5])
             let moveOut = float4x4(translation: [4, 0, 0])
             let notUpsideDown = float4x4(rotationZ: SfaxMath.degreesToRadians(180.0))
-            let aroundSun = float4x4(rotationY: SfaxMath.degreesToRadians(Renderer.timer*5.0))
-            let earthSpin = float4x4(rotationY: SfaxMath.degreesToRadians(Renderer.timer*20.0))
+            let aroundSun = float4x4(rotationY: SfaxMath.degreesToRadians(self.timer*5.0))
+            let earthSpin = float4x4(rotationY: SfaxMath.degreesToRadians(self.timer*20.0))
             uniforms.modelMatrix =  notUpsideDown * aroundSun * moveOut * earthSpin * scale
         })
         
         var uniformsMoon = Uniforms()
-        let meshMoon = Models.importModel(Renderer.device, "planetsphere", "obj")
-        let texMoon = Utils.loadTexture(imageName: "moon.png")
+        let meshMoon = Models.importModel(self.device, "planetsphere", "obj")
+        let texMoon = Utils.loadTexture(imageName: "moon.png", device: self.device)
         scene.addEntity(name: "Moon", mesh: meshMoon!, uniforms: &uniformsMoon, texture: texMoon, updateUniforms: { uniforms in
-            uniforms.viewMatrix = Renderer.viewMatrix
-            uniforms.projectionMatrix = Renderer.projMatrix
+            uniforms.viewMatrix = self.viewMatrix
+            uniforms.projectionMatrix = self.projMatrix
             let scale = float4x4(scaling: [0.3, 0.3, 0.3])
             let moveOut = float4x4(translation: [6, 0, 0])
             let moveOut2 = float4x4(translation: [1, 0, 0])
             //let moveIn = float4x4(translation: [-6, 0, 0])
             let moveIn2 = float4x4(translation: [-2, 0, 0])
             let notUpsideDown = float4x4(rotationZ: SfaxMath.degreesToRadians(180.0))
-            let aroundSun = float4x4(rotationY: SfaxMath.degreesToRadians(Renderer.timer*5.0))
-            let aroundEarth = float4x4(rotationY: SfaxMath.degreesToRadians(Renderer.timer*15.0))
-            let aroundSunBack = float4x4(rotationY: -SfaxMath.degreesToRadians(Renderer.timer*5.0))
-            //let earthSpin = float4x4(rotationY: SfaxMath.degreesToRadians(Renderer.timer*20.0))
+            let aroundSun = float4x4(rotationY: SfaxMath.degreesToRadians(self.timer*5.0))
+            let aroundEarth = float4x4(rotationY: SfaxMath.degreesToRadians(self.timer*15.0))
+            let aroundSunBack = float4x4(rotationY: -SfaxMath.degreesToRadians(self.timer*5.0))
+            //let earthSpin = float4x4(rotationY: SfaxMath.degreesToRadians(self.timer*20.0))
 //            uniforms.modelMatrix =  notUpsideDown * aroundSun * moveOut * scale //STICKS TO EARTH
             
 //            uniforms.modelMatrix = notUpsideDown * aroundSun * moveOut * aroundEarth * moveOut2 * scale //GETTING CLOSE
@@ -103,40 +104,40 @@ class Renderer: NSObject, MTKViewDelegate {
         })
         
         var uniformsSky = Uniforms()
-        let meshSky = Models.importModel(Renderer.device, "planetsphere", "obj")
-        let texSky = Utils.loadTexture(imageName: "StarsInSpace.png")
+        let meshSky = Models.importModel(self.device, "planetsphere", "obj")
+        let texSky = Utils.loadTexture(imageName: "StarsInSpace.png", device: self.device)
         scene.addEntity(name: "Skydome", mesh: meshSky!, uniforms: &uniformsSky, texture: texSky, obeysLight: false, isLight: false, updateUniforms: { uniforms in
-            uniforms.viewMatrix = Renderer.viewMatrix
-            uniforms.projectionMatrix = Renderer.projMatrix
+            uniforms.viewMatrix = self.viewMatrix
+            uniforms.projectionMatrix = self.projMatrix
             let scale = float4x4(scaling: [60.0, 60.0, 60.0])
             uniforms.modelMatrix = scale
         })
     }
     
-    static func buildDepthStencilState() -> MTLDepthStencilState? {
+    func buildDepthStencilState() -> MTLDepthStencilState? {
         let descriptor = MTLDepthStencilDescriptor()
         descriptor.depthCompareFunction = .less
         descriptor.isDepthWriteEnabled = true
-        return Renderer.device.makeDepthStencilState(descriptor: descriptor)
+        return self.device.makeDepthStencilState(descriptor: descriptor)
     }
     
     func draw(in view: MTKView) {
-        Renderer.timer += 0.1
+        self.timer += 0.1
         
         guard let drawable = view.currentDrawable,
               let renderPassDescriptor = view.currentRenderPassDescriptor else {
             return
         }
         
-        let commandBuffer = Renderer.commandQueue.makeCommandBuffer()
+        let commandBuffer = self.commandQueue.makeCommandBuffer()
         let commandEncoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
-        commandEncoder?.setDepthStencilState(Renderer.depthStencilState)
+        commandEncoder?.setDepthStencilState(self.depthStencilState)
         
         var index = 0
-        commandEncoder?.setFragmentBytes(&Renderer.scene.lights[0], length: MemoryLayout<Light>.stride, index: 2)
-        for entity in Renderer.scene.entities {
+        commandEncoder?.setFragmentBytes(&self.scene.lights[0], length: MemoryLayout<Light>.stride, index: 2)
+        for entity in self.scene.entities {
             
-            Renderer.scene.entitiesModify[index](&entity.uniforms) //Calls update function associated w/ entity
+            self.scene.entitiesModify[index](&entity.uniforms) //Calls update function associated w/ entity
             entity.uniforms.normalMatrix = SfaxMath.upperLeft(entity.uniforms.modelMatrix) //Set normal matrix
 
             commandEncoder?.setVertexBuffer(entity.mesh.vertexBuffers[0].buffer, offset: 0, index: 0)
@@ -144,8 +145,8 @@ class Renderer: NSObject, MTKViewDelegate {
             var uniforms = entity.uniforms
             
             commandEncoder?.setVertexBytes(&uniforms, length: MemoryLayout<Uniforms>.stride, index: 1)
-            commandEncoder?.setVertexBytes(&Renderer.timer, length: MemoryLayout<Float>.stride, index: 2)
-            commandEncoder?.setFragmentBytes(&Renderer.timer, length: MemoryLayout<Float>.stride, index: 1)
+            commandEncoder?.setVertexBytes(&self.timer, length: MemoryLayout<Float>.stride, index: 2)
+            commandEncoder?.setFragmentBytes(&self.timer, length: MemoryLayout<Float>.stride, index: 1)
             commandEncoder?.setFragmentTexture(entity.tex!, index: 0)
             
             commandEncoder?.setFragmentBytes(&entity.obeysLight, length: MemoryLayout<Bool>.stride, index: 3)
@@ -167,7 +168,7 @@ class Renderer: NSObject, MTKViewDelegate {
         
     }
     
-    static func createModelRenderPipelineState(mesh: MTKMesh,
+    func createModelRenderPipelineState(mesh: MTKMesh,
                                                vFuncName: String = "vertex_main",
                                                fFuncName: String = "fragment_main") -> MTLRenderPipelineState? {
         
@@ -186,7 +187,7 @@ class Renderer: NSObject, MTKViewDelegate {
         renderPipelineDescriptor.fragmentFunction = fragmentFunction
         do {
             print("Setting render pipeline state for given MTKMesh")
-            return try Renderer.device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
+            return try self.device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
         } catch {
             print(error.localizedDescription)
         }
@@ -194,7 +195,7 @@ class Renderer: NSObject, MTKViewDelegate {
         return nil
     }
     
-    static func createDefaultRenderPipelineState() {
+    func createDefaultRenderPipelineState() {
         let vertexDescriptor:MTLVertexDescriptor = {
             let vD = MTLVertexDescriptor()
             vD.attributes[0].format = .float4
@@ -217,7 +218,7 @@ class Renderer: NSObject, MTKViewDelegate {
         renderPipelineDescriptor.fragmentFunction = fragmentFunction
         do {
             print("Setting default render pipeline state")
-            Renderer.defaultRenderPipelineState = try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
+            self.defaultRenderPipelineState = try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
         } catch {
             print(error.localizedDescription)
         }

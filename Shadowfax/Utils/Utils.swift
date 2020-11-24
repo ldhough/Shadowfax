@@ -13,8 +13,8 @@ import UIKit
 class Utils {
     
     //Loads a texture from main bundle
-    static func loadTextureMainBundle(name: String) -> MTLTexture? { //Loads a texture from main bundle
-        let texLoader = MTKTextureLoader(device: Renderer.device)
+    static func loadTextureMainBundle(name: String, device: MTLDevice) -> MTLTexture? { //Loads a texture from main bundle
+        let texLoader = MTKTextureLoader(device: device)
         var texture:MTLTexture?
         do {
             texture = try texLoader.newTexture(name: name, scaleFactor: 1.0, bundle: Bundle.main, options: [:])
@@ -28,7 +28,8 @@ class Utils {
     static func buildTexture(pixelFormat: MTLPixelFormat,
                              size: CGSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height),
                              usage: MTLTextureUsage?,
-                             storageMode: MTLStorageMode = .private) -> MTLTexture {
+                             storageMode: MTLStorageMode = .private,
+                             device: MTLDevice) -> MTLTexture {
         
         let descriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: pixelFormat,
                                                                   width: Int(size.width),
@@ -43,15 +44,15 @@ class Utils {
         
         descriptor.storageMode = .shared
         
-        guard let texture = Renderer.device.makeTexture(descriptor: descriptor) else {
+        guard let texture = device.makeTexture(descriptor: descriptor) else {
             fatalError("Could not make blank texture")
         }
         return texture
     }
     
-    static func loadTexture(imageName: String) -> MTLTexture? {
+    static func loadTexture(imageName: String, device: MTLDevice) -> MTLTexture? {
         
-        let textureLoader = MTKTextureLoader(device: Renderer.device)
+        let textureLoader = MTKTextureLoader(device: device)
         var texture:MTLTexture?
         let textureLoaderOptions:[MTKTextureLoader.Option: Any]
         textureLoaderOptions = [.SRGB: false]
