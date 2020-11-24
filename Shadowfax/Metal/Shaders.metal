@@ -6,7 +6,7 @@
 //
 
 #include <metal_stdlib>
-#import "Shadowfax-Bridging-Header.h"
+#import "MetalHeader.h"
 using namespace metal;
 
 struct VertexIn {

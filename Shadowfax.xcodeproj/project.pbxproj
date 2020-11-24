@@ -21,6 +21,7 @@
 		486918D82522F61300F25BFD /* ControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486918D72522F61300F25BFD /* ControlView.swift */; };
 		486918E02523008D00F25BFD /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486918DF2523008D00F25BFD /* Utils.swift */; };
 		4869B580255E10D1007D5C6C /* Light.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4869B57F255E10D1007D5C6C /* Light.swift */; };
+		4876130E256C95BB00728D94 /* CMath.c in Sources */ = {isa = PBXBuildFile; fileRef = 4876130D256C95BB00728D94 /* CMath.c */; };
 		48A938DB256828CF0068FBBE /* StarsInSpace.png in Resources */ = {isa = PBXBuildFile; fileRef = 48A938DA256828CF0068FBBE /* StarsInSpace.png */; };
 		48A938E125682AD20068FBBE /* Cube.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 48A938DF25682AD20068FBBE /* Cube.mtl */; };
 		48A938E225682AD20068FBBE /* Cube.obj in Resources */ = {isa = PBXBuildFile; fileRef = 48A938E025682AD20068FBBE /* Cube.obj */; };
@@ -74,6 +75,9 @@
 		486918DF2523008D00F25BFD /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		486918E42523D0A400F25BFD /* Shadowfax-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Shadowfax-Bridging-Header.h"; sourceTree = "<group>"; };
 		4869B57F255E10D1007D5C6C /* Light.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Light.swift; sourceTree = "<group>"; };
+		4876130C256C95BB00728D94 /* CMath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CMath.h; sourceTree = "<group>"; };
+		4876130D256C95BB00728D94 /* CMath.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = CMath.c; sourceTree = "<group>"; };
+		48A1019B256CADF7009338AF /* MetalHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MetalHeader.h; sourceTree = "<group>"; };
 		48A938DA256828CF0068FBBE /* StarsInSpace.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = StarsInSpace.png; sourceTree = "<group>"; };
 		48A938DF25682AD20068FBBE /* Cube.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cube.mtl; sourceTree = "<group>"; };
 		48A938E025682AD20068FBBE /* Cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cube.obj; sourceTree = "<group>"; };
@@ -185,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				486918E42523D0A400F25BFD /* Shadowfax-Bridging-Header.h */,
+				48A1019B256CADF7009338AF /* MetalHeader.h */,
 				486918C72522F55E00F25BFD /* Shaders.metal */,
 			);
 			path = Metal;
@@ -195,6 +200,8 @@
 			children = (
 				486918A22522DE3200F25BFD /* Math.swift */,
 				486918DF2523008D00F25BFD /* Utils.swift */,
+				4876130C256C95BB00728D94 /* CMath.h */,
+				4876130D256C95BB00728D94 /* CMath.c */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -375,6 +382,7 @@
 				48FA932625322D190007DB36 /* Scene.swift in Sources */,
 				486918E02523008D00F25BFD /* Utils.swift in Sources */,
 				486918682522D0FC00F25BFD /* SceneDelegate.swift in Sources */,
+				4876130E256C95BB00728D94 /* CMath.c in Sources */,
 				4869B580255E10D1007D5C6C /* Light.swift in Sources */,
 				486918BF2522F43E00F25BFD /* Entity.swift in Sources */,
 				486918AC2522EDC100F25BFD /* Renderer.swift in Sources */,

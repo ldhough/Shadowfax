@@ -22,7 +22,6 @@ class ButtonActions {
     //var buttonFunctions:[String : ((Any) -> Void, Any)] = [:]
     
     func up() {
-        
         print("Up")
     }
     
@@ -82,6 +81,7 @@ struct ControlView: View {
         .frame(width: buttonSize.width, height: buttonSize.width)
         .onTapGesture {
             doAction()
+            
         }
     }
     

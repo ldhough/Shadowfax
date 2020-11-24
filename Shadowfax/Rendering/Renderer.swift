@@ -86,7 +86,7 @@ class Renderer: NSObject, MTKViewDelegate {
             let scale = float4x4(scaling: [0.3, 0.3, 0.3])
             let moveOut = float4x4(translation: [6, 0, 0])
             let moveOut2 = float4x4(translation: [1, 0, 0])
-            let moveIn = float4x4(translation: [-6, 0, 0])
+            //let moveIn = float4x4(translation: [-6, 0, 0])
             let moveIn2 = float4x4(translation: [-2, 0, 0])
             let notUpsideDown = float4x4(rotationZ: SfaxMath.degreesToRadians(180.0))
             let aroundSun = float4x4(rotationY: SfaxMath.degreesToRadians(Renderer.timer*5.0))
@@ -105,10 +105,10 @@ class Renderer: NSObject, MTKViewDelegate {
         var uniformsSky = Uniforms()
         let meshSky = Models.importModel(Renderer.device, "planetsphere", "obj")
         let texSky = Utils.loadTexture(imageName: "StarsInSpace.png")
-        scene.addEntity(name: "Skybox", mesh: meshSky!, uniforms: &uniformsSky, texture: texSky, obeysLight: false, isLight: false, updateUniforms: { uniforms in
+        scene.addEntity(name: "Skydome", mesh: meshSky!, uniforms: &uniformsSky, texture: texSky, obeysLight: false, isLight: false, updateUniforms: { uniforms in
             uniforms.viewMatrix = Renderer.viewMatrix
             uniforms.projectionMatrix = Renderer.projMatrix
-            let scale = float4x4(scaling: [40.0, 40.0, 40.0])
+            let scale = float4x4(scaling: [60.0, 60.0, 60.0])
             uniforms.modelMatrix = scale
         })
     }
