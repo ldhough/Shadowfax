@@ -11,55 +11,32 @@ import SwiftUI
  SwiftUI UI components to use for buttons/interaction with scenes as well as supporting classes & structs
  */
 
-class CONSTANTS {
-    static let screen_size = UIScreen.main.bounds.size
-    static let native_size = UIScreen.main.nativeBounds.size
-}
-
-class ButtonActions {
-    
-    var objects:[String : Any] = [:]
-    //var buttonFunctions:[String : ((Any) -> Void, Any)] = [:]
-    
-    func up() {
-        print("Up")
-    }
-    
-    func right() {
-        print("Right")
-    }
-    
-    func left() {
-        print("Left")
-    }
-    
-    func down() {
-        print("Down")
-    }
-    
-}
-
-struct Triangle: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        path.move(to: CGPoint(x: rect.midX, y: rect.minY))
-        path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
-        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
-        path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
-        return path
-    }
-}
-
-enum CardinalDirections {
-    case top
-    case bottom
-    case right
-    case left
-}
+//class ButtonActions {
+//    
+//    var objects:[String : Any] = [:]
+//    //var buttonFunctions:[String : ((Any) -> Void, Any)] = [:]
+//    
+//    func up() {
+//        print("Up")
+//    }
+//    
+//    func right() {
+//        print("Right")
+//    }
+//    
+//    func left() {
+//        print("Left")
+//    }
+//    
+//    func down() {
+//        print("Down")
+//    }
+//    
+//}
 
 struct ControlView: View {
     
-    let buttonActions:ButtonActions
+    let sfaxScene:SfaxScene
     
     func arrowKey(buttonSize: CGSize = CGSize(width: CONSTANTS.screen_size.width/10,
                                               height: CONSTANTS.screen_size.width/10),
@@ -90,18 +67,18 @@ struct ControlView: View {
             Spacer()
             HStack {
                 arrowKey(arrowDirection: .top) {
-                    self.buttonActions.up()
+                    //self.buttonActions.up()
                 }
             }
             HStack {
                 arrowKey(arrowDirection: .left) {
-                    self.buttonActions.left()
+                    //self.buttonActions.left()
                 }.padding([.bottom])
                 arrowKey(arrowDirection: .bottom) {
-                    self.buttonActions.down()
+                    //self.buttonActions.down()
                 }.padding([.bottom])
                 arrowKey(arrowDirection: .right) {
-                    self.buttonActions.right()
+                    //self.buttonActions.right()
                 }.padding([.bottom])
             }
         }.padding([.trailing])
@@ -109,7 +86,7 @@ struct ControlView: View {
     
     var body: some View {
         ZStack {
-            SwiftUIMetalView(buttonActions: self.buttonActions)
+            sfaxScene.swiftUIMetalView//SwiftUIMetalView(metalView: MetalView())
             //Color.white
             HStack {
 //                Spacer()
@@ -118,4 +95,22 @@ struct ControlView: View {
             }
         }.ignoresSafeArea()
     }
+}
+
+struct Triangle: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        path.move(to: CGPoint(x: rect.midX, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+        path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
+        return path
+    }
+}
+
+enum CardinalDirections {
+    case top
+    case bottom
+    case right
+    case left
 }

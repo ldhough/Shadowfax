@@ -14,8 +14,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-
-        let contentView = ControlView(buttonActions: ButtonActions())
+        let sfaxScene = SfaxScene()
+        
+        //DESCRIBE SCENE
+        
+        
+        //END DESCRIBE SCENE
+        
+        let contentView = ControlView(sfaxScene: sfaxScene)
 
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)

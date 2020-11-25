@@ -1,8 +1,8 @@
 //
-//  ViewController.swift
+//  MetalView.swift
 //  Shadowfax
 //
-//  Created by Lannie Hough on 9/29/20.
+//  Created by Lannie Hough on 11/24/20.
 //
 
 import Foundation
@@ -12,17 +12,12 @@ import MetalKit
 
 class MetalView: MTKView {
     
+    var sfaxScene:SfaxScene!
     var renderer:Renderer!
     var scene:Scene!
-    let buttonActions:ButtonActions
     
-//    func setupButtonActions() {
-//
-//    }
-    
-    init(buttonActions: ButtonActions) {
-        self.buttonActions = buttonActions
-        print("MetalView init")
+    init(sfaxScene: SfaxScene, scene: Scene) {
+
         super.init(frame: .zero, device: MTLCreateSystemDefaultDevice())
         guard let defaultDevice = device else {
             fatalError("Error")
@@ -30,14 +25,15 @@ class MetalView: MTKView {
         colorPixelFormat = .bgra8Unorm
         depthStencilPixelFormat = .depth32Float
         clearColor = MTLClearColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1.0)
-        let cam = Camera(aspect: Float(UIScreen.main.bounds.width) / Float(UIScreen.main.bounds.height))
-        let scene = Scene(cam: cam)
+        
+//        let cam = Camera(aspect: Float(UIScreen.main.bounds.width) / Float(UIScreen.main.bounds.height))
+//        let scene = Scene(cam: cam)
+        self.sfaxScene = sfaxScene
         self.scene = scene
-        renderer = Renderer(device: defaultDevice, scene: scene)
+        self.renderer = Renderer(device: defaultDevice, scene: scene)
+        
         delegate = renderer
         addGestureRecognizers(view: self)
-        self.buttonActions.objects["camera"] = cam
-        //self.setupButtonActions()
     }
     
     required init(coder: NSCoder) {
@@ -89,11 +85,11 @@ class MetalView: MTKView {
 }
 
 struct SwiftUIMetalView: UIViewRepresentable {
-    
-    let buttonActions:ButtonActions
+
+    let metalView:MetalView
     
     func makeUIView(context: Context) -> MTKView {
-        return MetalView(buttonActions: self.buttonActions)
+        return self.metalView
     }
     
     func updateUIView(_ uiView: MTKView, context: Context) {
