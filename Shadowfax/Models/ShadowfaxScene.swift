@@ -27,6 +27,7 @@ class SfaxScene {
         self.scene = Scene(cam: cam)
         self.metalView = MetalView(sfaxScene: self, scene: self.scene)
         self.renderer = self.metalView.renderer
+        self.scene.renderer = self.renderer //rethink later
         self.swiftUIMetalView = SwiftUIMetalView(metalView: self.metalView)
         self.interactions = Interaction(self)
     }

@@ -30,7 +30,7 @@ class MetalView: MTKView {
 //        let scene = Scene(cam: cam)
         self.sfaxScene = sfaxScene
         self.scene = scene
-        self.renderer = Renderer(device: defaultDevice, scene: scene)
+        self.renderer = Renderer(device: defaultDevice, scene: scene, sfaxScene: sfaxScene)
         
         delegate = renderer
         addGestureRecognizers(view: self)

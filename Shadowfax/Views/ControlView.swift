@@ -11,37 +11,14 @@ import SwiftUI
  SwiftUI UI components to use for buttons/interaction with scenes as well as supporting classes & structs
  */
 
-//class ButtonActions {
-//    
-//    var objects:[String : Any] = [:]
-//    //var buttonFunctions:[String : ((Any) -> Void, Any)] = [:]
-//    
-//    func up() {
-//        print("Up")
-//    }
-//    
-//    func right() {
-//        print("Right")
-//    }
-//    
-//    func left() {
-//        print("Left")
-//    }
-//    
-//    func down() {
-//        print("Down")
-//    }
-//    
-//}
-
 struct ControlView: View {
     
     let sfaxScene:SfaxScene
     
     func arrowKey(buttonSize: CGSize = CGSize(width: CONSTANTS.screen_size.width/10,
                                               height: CONSTANTS.screen_size.width/10),
-                  arrowDirection: CardinalDirections,
-                  doAction: @escaping () -> Void) -> some View {
+                  arrowDirection: CardinalDirections) -> some View {//,
+                  //doAction: @escaping () -> Void) -> some View {
         ZStack {
             RoundedRectangle(cornerRadius: 3)
                 .foregroundColor(Color.gray)
@@ -56,30 +33,40 @@ struct ControlView: View {
                                     : Angle(degrees: 270.0))
         }
         .frame(width: buttonSize.width, height: buttonSize.width)
-        .onTapGesture {
-            doAction()
-            
-        }
+//        .onTapGesture {
+//            doAction()
+//
+//        }
     }
+    
+    @GestureState private var pressingUp = false //{
+//        didSet {
+//            if self.pressingUp == true {
+//                sfaxScene.interactions.interactFunctions["forward"]!.1 = true
+//            } else {
+//                sfaxScene.interactions.interactFunctions["forward"]!.1 = false
+//            }
+//        }
+//    }
     
     func arrowKeys() -> some View {
         VStack {
             Spacer()
             HStack {
-                arrowKey(arrowDirection: .top) {
-                    //self.buttonActions.up()
-                }
+                arrowKey(arrowDirection: .top)
+                    .gesture(LongPressGesture(minimumDuration: 0)
+                                .sequenced(before: DragGesture(minimumDistance: 0, coordinateSpace: .local))
+                                .updating($pressingUp) { value, state, thing in
+                                    sfaxScene.interactions.interactFunctions["forward"]!.1 = true
+                                }.onEnded({ _ in
+                                    sfaxScene.interactions.interactFunctions["forward"]!.1 = false
+                                }))
+                
             }
             HStack {
-                arrowKey(arrowDirection: .left) {
-                    //self.buttonActions.left()
-                }.padding([.bottom])
-                arrowKey(arrowDirection: .bottom) {
-                    //self.buttonActions.down()
-                }.padding([.bottom])
-                arrowKey(arrowDirection: .right) {
-                    //self.buttonActions.right()
-                }.padding([.bottom])
+                arrowKey(arrowDirection: .left).padding([.bottom])
+                arrowKey(arrowDirection: .bottom).padding([.bottom])
+                arrowKey(arrowDirection: .right).padding([.bottom])
             }
         }.padding([.trailing])
     }

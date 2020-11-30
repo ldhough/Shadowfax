@@ -19,5 +19,6 @@ class Interaction {
     
     //Set to deal with panning on screen
     var panInteract:((UIPanGestureRecognizer, SfaxScene) -> Void)!
+    var interactFunctions:[String : ((SfaxScene) -> Void, Bool)] = [:]
     
 }

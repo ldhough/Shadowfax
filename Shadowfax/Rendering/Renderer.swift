@@ -10,6 +10,7 @@ import ModelIO
 
 class Renderer: NSObject, MTKViewDelegate {
     
+    var sfaxScene:SfaxScene!
     var device:MTLDevice!
     var commandQueue:MTLCommandQueue!
     var library:MTLLibrary!
@@ -27,91 +28,22 @@ class Renderer: NSObject, MTKViewDelegate {
     
     var scene:Scene!
     
-    //static var sunlight:Light! //temporary
-    
-    init(device: MTLDevice, scene: Scene) {
+    init(device: MTLDevice, scene: Scene, sfaxScene: SfaxScene) {
         print("Renderer init")
         super.init()
-        
-        //Renderer.sunlight = Lighting.makePointLight()
-        
+        self.sfaxScene = sfaxScene
         self.scene = scene
-        self.scene.renderer = self
+        //self.scene.renderer = self //rethink later
         self.scene.camera.position = [0, 0, -30] //back 30
         self.device = device
         self.commandQueue = self.device.makeCommandQueue()
         self.library = self.device.makeDefaultLibrary()
         self.depthStencilState = self.buildDepthStencilState()
         self.createDefaultRenderPipelineState()
-        self.buildScene(scene: scene)
     }
     
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
 
-    }
-    
-    func buildScene(scene: Scene) {
-        //SUN
-        var uniforms = Uniforms()
-        let mesh = Models.importModel(self.device, "planetsphere", "obj")
-        let tex = Utils.loadTexture(imageName: "sun.png", device: self.device) //tex
-        scene.addEntity(name: "Sun", mesh: mesh!, uniforms: &uniforms, texture: tex, obeysLight: false, isLight: true,
-                        updateUniforms: { uniforms in
-            uniforms.viewMatrix = self.viewMatrix
-            uniforms.projectionMatrix = self.projMatrix
-            let notUpsideDown = float4x4(rotationZ: SfaxMath.degreesToRadians(180.0))
-            uniforms.modelMatrix = notUpsideDown * float4x4(rotationY: SfaxMath.degreesToRadians(self.timer*10.0))
-        })
-        
-        //EARTH
-        var uniformsEarth = Uniforms()
-        let meshEarth = Models.importModel(self.device, "planetsphere", "obj")
-        let texEarth = Utils.loadTexture(imageName: "earth.png", device: self.device)
-        scene.addEntity(name: "Earth", mesh: meshEarth!, uniforms: &uniformsEarth, texture: texEarth, updateUniforms: { uniforms in
-            uniforms.viewMatrix = self.viewMatrix
-            uniforms.projectionMatrix = self.projMatrix
-            let scale = float4x4(scaling: [0.5, 0.5, 0.5])
-            let moveOut = float4x4(translation: [4, 0, 0])
-            let notUpsideDown = float4x4(rotationZ: SfaxMath.degreesToRadians(180.0))
-            let aroundSun = float4x4(rotationY: SfaxMath.degreesToRadians(self.timer*5.0))
-            let earthSpin = float4x4(rotationY: SfaxMath.degreesToRadians(self.timer*20.0))
-            uniforms.modelMatrix =  notUpsideDown * aroundSun * moveOut * earthSpin * scale
-        })
-        
-        var uniformsMoon = Uniforms()
-        let meshMoon = Models.importModel(self.device, "planetsphere", "obj")
-        let texMoon = Utils.loadTexture(imageName: "moon.png", device: self.device)
-        scene.addEntity(name: "Moon", mesh: meshMoon!, uniforms: &uniformsMoon, texture: texMoon, updateUniforms: { uniforms in
-            uniforms.viewMatrix = self.viewMatrix
-            uniforms.projectionMatrix = self.projMatrix
-            let scale = float4x4(scaling: [0.3, 0.3, 0.3])
-            let moveOut = float4x4(translation: [6, 0, 0])
-            let moveOut2 = float4x4(translation: [1, 0, 0])
-            //let moveIn = float4x4(translation: [-6, 0, 0])
-            let moveIn2 = float4x4(translation: [-2, 0, 0])
-            let notUpsideDown = float4x4(rotationZ: SfaxMath.degreesToRadians(180.0))
-            let aroundSun = float4x4(rotationY: SfaxMath.degreesToRadians(self.timer*5.0))
-            let aroundEarth = float4x4(rotationY: SfaxMath.degreesToRadians(self.timer*15.0))
-            let aroundSunBack = float4x4(rotationY: -SfaxMath.degreesToRadians(self.timer*5.0))
-            //let earthSpin = float4x4(rotationY: SfaxMath.degreesToRadians(self.timer*20.0))
-//            uniforms.modelMatrix =  notUpsideDown * aroundSun * moveOut * scale //STICKS TO EARTH
-            
-//            uniforms.modelMatrix = notUpsideDown * aroundSun * moveOut * aroundEarth * moveOut2 * scale //GETTING CLOSE
-//            uniforms.modelMatrix = notUpsideDown * aroundSun * moveOut * moveIn2 * aroundEarth * moveOut2 * scale //VERY GOOD w/ moveIn2 -2
-            //uniforms.modelMatrix = notUpsideDown * moveIn2 * aroundSun * moveOut * aroundEarth * moveOut2 * scale
-            uniforms.modelMatrix = notUpsideDown * aroundSun * moveOut * moveIn2 * aroundEarth * moveOut2 * scale
-            
-        })
-        
-        var uniformsSky = Uniforms()
-        let meshSky = Models.importModel(self.device, "planetsphere", "obj")
-        let texSky = Utils.loadTexture(imageName: "StarsInSpace.png", device: self.device)
-        scene.addEntity(name: "Skydome", mesh: meshSky!, uniforms: &uniformsSky, texture: texSky, obeysLight: false, isLight: false, updateUniforms: { uniforms in
-            uniforms.viewMatrix = self.viewMatrix
-            uniforms.projectionMatrix = self.projMatrix
-            let scale = float4x4(scaling: [60.0, 60.0, 60.0])
-            uniforms.modelMatrix = scale
-        })
     }
     
     func buildDepthStencilState() -> MTLDepthStencilState? {
@@ -123,6 +55,13 @@ class Renderer: NSObject, MTKViewDelegate {
     
     func draw(in view: MTKView) {
         self.timer += 0.1
+        
+        for (_, v) in sfaxScene.interactions.interactFunctions {
+            if v.1 {
+                print("val tru")
+                v.0(self.sfaxScene)
+            }
+        }
         
         guard let drawable = view.currentDrawable,
               let renderPassDescriptor = view.currentRenderPassDescriptor else {
