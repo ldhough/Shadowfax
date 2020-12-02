@@ -54,33 +54,34 @@ class MetalView: MTKView {
     var lastHorizAngle:CGFloat = 0.0 //unused rn
     var lastVertAngle:CGFloat = 0.0 //unused rn
     
+    //Doing nothing rn, moved functionality to ControlView.swift
     //Modifies camera view matrix based on percent of screen that is traversed between events and a sensitivity factor
     @objc func handlePan(gesture: UIPanGestureRecognizer) {
         
-        let sensitivity:CGFloat = CGFloat(self.scene.camera.sensitivity)
-        //print("panning")
-        if gesture.state == .began {
-            panStart = gesture.location(in: self)
-            lastPanPoint = panStart
-        } else if gesture.state == .ended {
-            panStart = nil
-            lastPanPoint = nil
-        } else {
+//        let sensitivity:CGFloat = CGFloat(self.scene.camera.sensitivity)
+//        //print("panning")
+//        if gesture.state == .began {
+//            panStart = gesture.location(in: self)
+//            lastPanPoint = panStart
+//        } else if gesture.state == .ended {
+//            panStart = nil
+//            lastPanPoint = nil
+//        } else {
+////            lastPanPoint = gesture.location(in: self)
+//            let screenWidth = UIScreen.main.bounds.width
+//            let screenHeight = UIScreen.main.bounds.height
+//            let distanceTraveledHoriz = gesture.location(in: self).x-lastPanPoint.x
+//            let distanceTraveledVert = gesture.location(in: self).y-lastPanPoint.y
 //            lastPanPoint = gesture.location(in: self)
-            let screenWidth = UIScreen.main.bounds.width
-            let screenHeight = UIScreen.main.bounds.height
-            let distanceTraveledHoriz = gesture.location(in: self).x-lastPanPoint.x
-            let distanceTraveledVert = gesture.location(in: self).y-lastPanPoint.y
-            lastPanPoint = gesture.location(in: self)
-            let percentTraveledHoriz = abs(distanceTraveledHoriz) / screenWidth
-            let percentTraveledVert = abs(distanceTraveledVert) / screenHeight
-            let horizAngle = (distanceTraveledHoriz > 0 ? 180*sensitivity : -180*sensitivity) * percentTraveledHoriz
-            let vertAngle = (distanceTraveledVert > 0 ? 180*sensitivity : -180*sensitivity) * percentTraveledVert
-            //var val = (self.scene.camera.position.z > 0 ? (-) : (+))(SfaxMath.degreesToRadians(Float(vertAngle)), self.scene.camera.rotation.x)
-            self.scene.camera.rotation = [SfaxMath.degreesToRadians(Float(vertAngle)) + self.scene.camera.rotation.x, //camera.position.z > 0 ? (-) : (+)
-                                          SfaxMath.degreesToRadians(Float(horizAngle)) + self.scene.camera.rotation.y,
-                                          0]
-        }
+//            let percentTraveledHoriz = abs(distanceTraveledHoriz) / screenWidth
+//            let percentTraveledVert = abs(distanceTraveledVert) / screenHeight
+//            let horizAngle = (distanceTraveledHoriz > 0 ? 180*sensitivity : -180*sensitivity) * percentTraveledHoriz
+//            let vertAngle = (distanceTraveledVert > 0 ? 180*sensitivity : -180*sensitivity) * percentTraveledVert
+//            //var val = (self.scene.camera.position.z > 0 ? (-) : (+))(SfaxMath.degreesToRadians(Float(vertAngle)), self.scene.camera.rotation.x)
+//            self.scene.camera.rotation = [SfaxMath.degreesToRadians(Float(vertAngle)) + self.scene.camera.rotation.x, //camera.position.z > 0 ? (-) : (+)
+//                                          SfaxMath.degreesToRadians(Float(horizAngle)) + self.scene.camera.rotation.y,
+//                                          0]
+//        }
         
     }
 }
