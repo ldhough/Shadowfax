@@ -58,7 +58,7 @@ class Renderer: NSObject, MTKViewDelegate {
         
         for (_, v) in sfaxScene.interactions.interactFunctions {
             if v.1 {
-                print("val tru")
+                //print("val tru")
                 v.0(self.sfaxScene)
             }
         }

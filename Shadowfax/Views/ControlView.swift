@@ -39,32 +39,50 @@ struct ControlView: View {
 //        }
     }
     
-    @GestureState private var pressingUp = false //{
-//        didSet {
-//            if self.pressingUp == true {
-//                sfaxScene.interactions.interactFunctions["forward"]!.1 = true
-//            } else {
-//                sfaxScene.interactions.interactFunctions["forward"]!.1 = false
-//            }
-//        }
-//    }
+    @GestureState private var pressingUp = false
     
     func arrowKeys() -> some View {
         VStack {
             Spacer()
             HStack {
-                arrowKey(arrowDirection: .top)
-                    .gesture(LongPressGesture(minimumDuration: 0)
-                                .sequenced(before: DragGesture(minimumDistance: 0, coordinateSpace: .local))
-                                .updating($pressingUp) { value, state, thing in
-                                    sfaxScene.interactions.interactFunctions["forward"]!.1 = true
-                                }.onEnded({ _ in
-                                    sfaxScene.interactions.interactFunctions["forward"]!.1 = false
-                                }))
+//                arrowKey(arrowDirection: .top).modifier(TapAndReleaseModifier(tapAction: {
+//                                                                                print("set true")
+//                                                                                sfaxScene.interactions.interactFunctions["forward"]!.1 = true}
+//                                                                             , releaseAction: {}))
+//                Button(action: {
+//                    print("set false")
+//                    sfaxScene.interactions.interactFunctions["forward"]!.1 = false
+//                }) {
+//                    arrowKey(arrowDirection: .top)
+//                }.onTapGesture {
+//                    print("set true")
+//                    sfaxScene.interactions.interactFunctions["forward"]!.1 = true
+                //}
+//                .modifier(TapAndReleaseModifier(tapAction: {
+//                                                    print("set true")
+//                                                    sfaxScene.interactions.interactFunctions["forward"]!.1 = true}
+//                                                 , releaseAction: {}))
                 
+                
+                arrowKey(arrowDirection: .top).modifier(TapAndReleaseModifier(tapAction: {
+                    print("set true")
+                    sfaxScene.interactions.interactFunctions["forward"]!.1 = true
+                }, releaseAction: {
+                    print("set false")
+                    sfaxScene.interactions.interactFunctions["forward"]!.1 = false
+                }))
+//                    .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)//LongPressGesture(minimumDuration: 0)
+//                                //.sequenced(before: DragGesture(minimumDistance: 0, coordinateSpace: .local))
+//                                .updating($pressingUp) { value, state, _ in
+//                                    sfaxScene.interactions.interactFunctions["forward"]!.1 = true
+//                                }.onEnded({ _ in
+//                                    sfaxScene.interactions.interactFunctions["forward"]!.1 = false
+//                                }))
+                //LongPressGesture(minimumDuration: 0, maximumDistance: 0).onEnded(<#T##action: (Bool) -> Void##(Bool) -> Void#>)
             }
             HStack {
                 arrowKey(arrowDirection: .left).padding([.bottom])
+                    //.ge
                 arrowKey(arrowDirection: .bottom).padding([.bottom])
                 arrowKey(arrowDirection: .right).padding([.bottom])
             }
@@ -100,4 +118,29 @@ enum CardinalDirections {
     case bottom
     case right
     case left
+}
+
+struct TapAndReleaseModifier: ViewModifier {
+    let tapAction:() -> Void
+    let releaseAction:() -> Void
+    
+    func body(content: Content) -> some View {
+        content
+            .onLongPressGesture(minimumDuration: 0,
+                                maximumDistance: 5,
+                                pressing: {_ in},
+                                perform: {tapAction()})
+            .simultaneousGesture(TapGesture().onEnded({
+                releaseAction()
+            }))
+//            .gesture(TapGesture().onEnded(releaseAction))
+//            .onLongPressGesture(minimumDuration: 0,
+//                                pressing: {_ in},
+//                                perform: {
+//                                    tapAction()
+//                                })
+//            .onTapGesture {
+//                tapAction()
+//            }
+    }
 }

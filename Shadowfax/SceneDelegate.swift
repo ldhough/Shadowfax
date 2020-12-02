@@ -76,13 +76,30 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             if sfSc.interactions.interactFunctions["forward"]!.1 == true {
                 let prevPos = sfSc.scene.camera.position
                 //Rotation describes how camera is looking into scene, use this to find xyz components of moving in that direction
+                let distTraveled:Float = 0.1
+                let maxRad:Float = 2 * .pi
                 let rot = sfSc.scene.camera.rotation
-                var x, y, z:Float
-                z = 0.25
-                sfSc.scene.camera.position = [prevPos.x, prevPos.y, prevPos.z + z]
+                var rotX, rotY, rotZ:Float
+                rotX = rot.x //about x, cam up or down //pitch
+                rotY = rot.y //about y, cam right or left //yaw
+                rotZ = rot.z //don't care about this for now
+                var dx, dy, dz:Float
+                dx = sin(rotY) * distTraveled
+                dz = cos(rotY) * distTraveled
+                dy = 0.0
+                //dy = -(sin(rotX) * distTraveled)
+
+                print("XYZ Rotation: \(String(rotX)), \(String(rotY)), \(String(rotZ))")
+                print("XYZ Position: \(String(prevPos.x)), \(String(prevPos.y)), \(String(prevPos.z))")
+                print("= = = = = = = = = = = = = = = = = = = = =")
+
+                sfSc.scene.camera.position = [prevPos.x + dx, prevPos.y + dy, prevPos.z + dz]
                 //sfSc.interactions.interactFunctions["forward"]!.1 = false
             }
         }, false)
+        
+//        let x = r * cos(currentAngle)
+//        let y = r * sin(currentAngle)
         
         //END DESCRIBE SCENE
         

@@ -58,7 +58,7 @@ class MetalView: MTKView {
     @objc func handlePan(gesture: UIPanGestureRecognizer) {
         
         let sensitivity:CGFloat = CGFloat(self.scene.camera.sensitivity)
-        print("panning")
+        //print("panning")
         if gesture.state == .began {
             panStart = gesture.location(in: self)
             lastPanPoint = panStart
@@ -76,7 +76,8 @@ class MetalView: MTKView {
             let percentTraveledVert = abs(distanceTraveledVert) / screenHeight
             let horizAngle = (distanceTraveledHoriz > 0 ? 180*sensitivity : -180*sensitivity) * percentTraveledHoriz
             let vertAngle = (distanceTraveledVert > 0 ? 180*sensitivity : -180*sensitivity) * percentTraveledVert
-            self.scene.camera.rotation = [SfaxMath.degreesToRadians(Float(vertAngle)) + self.scene.camera.rotation.x,
+            //var val = (self.scene.camera.position.z > 0 ? (-) : (+))(SfaxMath.degreesToRadians(Float(vertAngle)), self.scene.camera.rotation.x)
+            self.scene.camera.rotation = [SfaxMath.degreesToRadians(Float(vertAngle)) + self.scene.camera.rotation.x, //camera.position.z > 0 ? (-) : (+)
                                           SfaxMath.degreesToRadians(Float(horizAngle)) + self.scene.camera.rotation.y,
                                           0]
         }

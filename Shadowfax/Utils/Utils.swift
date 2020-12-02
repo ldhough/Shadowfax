@@ -106,3 +106,8 @@ infix operator =||=
 func =||=<T: Comparable>(lhs: T, rhs: (T, T)) -> Bool {
     return lhs == rhs.0 || lhs == rhs.1 ? true : false
 }
+
+infix operator %
+func %<N: BinaryFloatingPoint>(lhs: N, rhs: N) -> N {
+    lhs.truncatingRemainder(dividingBy: rhs)
+}
