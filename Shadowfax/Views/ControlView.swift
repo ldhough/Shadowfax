@@ -40,11 +40,39 @@ struct ControlView: View {
     }
     
     @GestureState private var pressingUp = false
+    @GestureState private var panning = false
+    
+//    func ges() -> DragGesture {
+//        DragGesture(minimumDistance: 0, coordinateSpace: .local)
+//                                .updating($pressingUp) { value, state, _ in
+//                                    sfaxScene.interactions.interactFunctions["forward"]!.1 = true
+//                                }.onEnded({ _ in
+//                                    sfaxScene.interactions.interactFunctions["forward"]!.1 = false
+//                                })
+//    }
     
     func arrowKeys() -> some View {
         VStack {
             Spacer()
             HStack {
+                arrowKey(arrowDirection: .top)
+                    .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)
+                                .updating($pressingUp) { value, state, _ in
+                                    
+                                    sfaxScene.interactions.interactFunctions["forward"]!.1 = true
+                                }.onEnded({ _ in
+                                    sfaxScene.interactions.interactFunctions["forward"]!.1 = false
+                                })//.simultaneously(with:
+                                                    //DragGesture(minimumDistance: 0, coordinateSpace: .local))
+                            )
+                    //.gesture(SimultaneousGesture(DragGesture(minimumDistance: 0, coordinateSpace: .local), DragGesture(minimumDistance: 0, coordinateSpace: .local))
+//                arrowKey(arrowDirection: .top).modifier(TapReleaseModifier(tap: {
+//                    print("set true")
+//                    sfaxScene.interactions.interactFunctions["forward"]!.1 = true
+//                }, release: {
+//                    print("set false")
+//                    sfaxScene.interactions.interactFunctions["forward"]!.1 = false
+//                }))
 //                arrowKey(arrowDirection: .top).modifier(TapAndReleaseModifier(tapAction: {
 //                                                                                print("set true")
 //                                                                                sfaxScene.interactions.interactFunctions["forward"]!.1 = true}
@@ -64,17 +92,24 @@ struct ControlView: View {
 //                                                 , releaseAction: {}))
                 
                 
-                arrowKey(arrowDirection: .top).modifier(TapAndReleaseModifier(tapAction: {
-                    print("set true")
-                    sfaxScene.interactions.interactFunctions["forward"]!.1 = true
-                }, releaseAction: {
-                    print("set false")
-                    sfaxScene.interactions.interactFunctions["forward"]!.1 = false
-                }))
+//                arrowKey(arrowDirection: .top)
+//                    .modifier(TapAndReleaseModifier(tapAction: {
+//                    print("set true")
+//                    sfaxScene.interactions.interactFunctions["forward"]!.1 = true
+//                }, releaseAction: {
+//                    print("set false")
+//                    sfaxScene.interactions.interactFunctions["forward"]!.1 = false
+//                }))
 //                    .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)//LongPressGesture(minimumDuration: 0)
 //                                //.sequenced(before: DragGesture(minimumDistance: 0, coordinateSpace: .local))
 //                                .updating($pressingUp) { value, state, _ in
+//
+//                                    //value.location
+//                                    if abs(value.startLocation.x - value.location.x) < 10 {
 //                                    sfaxScene.interactions.interactFunctions["forward"]!.1 = true
+//                                    } else {
+//                                        sfaxScene.interactions.interactFunctions["forward"]!.1 = false
+//                                    }
 //                                }.onEnded({ _ in
 //                                    sfaxScene.interactions.interactFunctions["forward"]!.1 = false
 //                                }))
@@ -86,12 +121,47 @@ struct ControlView: View {
                 arrowKey(arrowDirection: .bottom).padding([.bottom])
                 arrowKey(arrowDirection: .right).padding([.bottom])
             }
-        }.padding([.trailing])
+        }.padding([.trailing])//.gesture(
+//            DragGesture(minimumDistance: 0, coordinateSpace: .local)
+//                .updating($panning) { value, state, _ in
+//
+//                    print("DOING PANNING")
+//                }.onEnded({ _ in
+//                    print("END PANNING")
+//                })
+//        )
     }
     
     var body: some View {
         ZStack {
-            sfaxScene.swiftUIMetalView//SwiftUIMetalView(metalView: MetalView())
+            sfaxScene.swiftUIMetalView.gesture(
+                DragGesture(minimumDistance: 0, coordinateSpace: .local)
+                    .updating($panning) { value, state, _ in
+                        if panStart == nil {
+                            panStart = value.location
+                            lastPanPoint = value.location
+                        }
+                        let sensitivity:CGFloat = CGFloat(sfaxScene.scene.camera.sensitivity)
+                        let screenWidth = UIScreen.main.bounds.width
+                        let screenHeight = UIScreen.main.bounds.height
+                        let distanceTraveledHoriz = value.location.x-lastPanPoint.x
+                        let distanceTraveledVert = value.location.y-lastPanPoint.y
+                        lastPanPoint = value.location
+                        let percentTraveledHoriz = abs(distanceTraveledHoriz) / screenWidth
+                        let percentTraveledVert = abs(distanceTraveledVert) / screenHeight
+                        let horizAngle = (distanceTraveledHoriz > 0 ? 180*sensitivity : -180*sensitivity) * percentTraveledHoriz
+                        let vertAngle = (distanceTraveledVert > 0 ? 180*sensitivity : -180*sensitivity) * percentTraveledVert
+                        //var val = (self.scene.camera.position.z > 0 ? (-) : (+))(SfaxMath.degreesToRadians(Float(vertAngle)), self.scene.camera.rotation.x)
+                        sfaxScene.scene.camera.rotation = [SfaxMath.degreesToRadians(Float(vertAngle)) + sfaxScene.scene.camera.rotation.x, //camera.position.z > 0 ? (-) : (+)
+                                                      SfaxMath.degreesToRadians(Float(horizAngle)) + sfaxScene.scene.camera.rotation.y,
+                                                      0]
+                        print("DOING PANNING")
+                    }.onEnded({ _ in
+                        panStart = nil
+                        lastPanPoint = nil
+                        print("END PANNING")
+                    })
+            )
             //Color.white
             HStack {
 //                Spacer()
@@ -101,6 +171,9 @@ struct ControlView: View {
         }.ignoresSafeArea()
     }
 }
+
+var panStart:CGPoint!
+var lastPanPoint:CGPoint!
 
 struct Triangle: Shape {
     func path(in rect: CGRect) -> Path {
@@ -127,8 +200,8 @@ struct TapAndReleaseModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .onLongPressGesture(minimumDuration: 0,
-                                maximumDistance: 5,
-                                pressing: {_ in},
+                                pressing: { _ in
+                                },
                                 perform: {tapAction()})
             .simultaneousGesture(TapGesture().onEnded({
                 releaseAction()
@@ -144,3 +217,4 @@ struct TapAndReleaseModifier: ViewModifier {
 //            }
     }
 }
+

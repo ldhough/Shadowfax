@@ -33,7 +33,7 @@ class MetalView: MTKView {
         self.renderer = Renderer(device: defaultDevice, scene: scene, sfaxScene: sfaxScene)
         
         delegate = renderer
-        addGestureRecognizers(view: self)
+        //addGestureRecognizers(view: self)
     }
     
     required init(coder: NSCoder) {
