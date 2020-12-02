@@ -19,6 +19,8 @@ class Interaction {
     
     //Set to deal with panning on screen
     var panInteract:((UIPanGestureRecognizer, SfaxScene) -> Void)!
+    //These functions are called every frame if bool in tuple is true
     var interactFunctions:[String : ((SfaxScene) -> Void, Bool)] = [:]
+    //These functions are intended to be called manually by user whenever desired
     
 }

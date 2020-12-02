@@ -63,11 +63,20 @@ class Camera {
     
     //pos is translation
     class func makeViewMatrix(pos: float3, rotX: Float, rotY: Float, rotZ: Float) -> float4x4 {
+        
         var viewMatrix:float4x4
-        let rotation:float4x4 = SfaxMath.rotateXYZ(rotX, rotY, rotZ)//float4x4(rotationX: rotX) * float4x4(rotationY: rotY) * float4x4(rotationZ: rotZ)
-        let posMatrix = float4x4(translation: pos)
-        viewMatrix = posMatrix * rotation//rotation * posMatrix
+        viewMatrix = float4x4(translation: pos)
+        viewMatrix *= float4x4(rotationY: rotY) //yaw, l->r
+        viewMatrix *= float4x4(rotationX: rotX) //pitch, u->d
+        //no roll yet
         return viewMatrix.inverse
+
+        //ORIGINAL
+//        var viewMatrix:float4x4
+//        let rotation:float4x4 = SfaxMath.rotateXYZ(rotX, rotY, rotZ)//float4x4(rotationX: rotX) * float4x4(rotationY: rotY) * float4x4(rotationZ: rotZ)
+//        let posMatrix = float4x4(translation: pos)
+//        viewMatrix = posMatrix * rotation//rotation * posMatrix
+//        return viewMatrix.inverse
     }
     
     class func makeProjectionMatrix(fovDegrees: Float, near: Float, far: Float, aspect: Float) -> float4x4 {

@@ -79,11 +79,9 @@ struct ControlView: View {
                         sfaxScene.scene.camera.rotation = [SfaxMath.degreesToRadians(Float(vertAngle)) + sfaxScene.scene.camera.rotation.x,
                                                       SfaxMath.degreesToRadians(Float(horizAngle)) + sfaxScene.scene.camera.rotation.y,
                                                       0]
-                        print("DOING PANNING")
                     }.onEnded({ _ in
                         panStart = nil
                         lastPanPoint = nil
-                        print("END PANNING")
                     })
             )
             HStack {
@@ -94,8 +92,8 @@ struct ControlView: View {
     }
 }
 
-var panStart:CGPoint!
-var lastPanPoint:CGPoint!
+fileprivate var panStart:CGPoint!
+fileprivate var lastPanPoint:CGPoint!
 
 struct Triangle: Shape {
     func path(in rect: CGRect) -> Path {
