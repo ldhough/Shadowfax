@@ -29,7 +29,8 @@ class Utils {
                              size: CGSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height),
                              usage: MTLTextureUsage?,
                              storageMode: MTLStorageMode = .private,
-                             device: MTLDevice) -> MTLTexture {
+                             device: MTLDevice,
+                             label: String = "") -> MTLTexture {
         
         let descriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: pixelFormat,
                                                                   width: Int(size.width),
@@ -47,6 +48,7 @@ class Utils {
         guard let texture = device.makeTexture(descriptor: descriptor) else {
             fatalError("Could not make blank texture")
         }
+        texture.label = label
         return texture
     }
     

@@ -53,6 +53,10 @@ class Renderer: NSObject, MTKViewDelegate {
         return self.device.makeDepthStencilState(descriptor: descriptor)
     }
     
+    func shadowmap() {
+        
+    }
+    
     func draw(in view: MTKView) {
         self.timer += 0.1
         
@@ -74,6 +78,23 @@ class Renderer: NSObject, MTKViewDelegate {
         
         var index = 0
         commandEncoder?.setFragmentBytes(&self.scene.lights[0], length: MemoryLayout<Light>.stride, index: 2)
+        
+        //Make shadow cubemap for sunlight - temp hacky solution
+        var shadowmap = Utils.buildTexture(pixelFormat: .bgra8Unorm,
+                                           size: CGSize(width: 1024*6, height: 1024),
+                                           usage: [.renderTarget, .shaderRead],
+                                           device: self.device,
+                                           label: "sunShadowmap")
+        self.scene.shadowmaps.append(shadowmap)
+        var shadowRPD = MTLRenderPassDescriptor()
+        shadowRPD.depthAttachment.texture = shadowmap
+        shadowRPD.depthAttachment.loadAction = .clear
+        shadowRPD.depthAttachment.storeAction = .store
+        shadowRPD.depthAttachment.clearDepth = 1
+        self.scene.shadowRenderPassDescs.append(<#T##newElement: MTLRenderPassDescriptor##MTLRenderPassDescriptor#>)
+        
+        //end shadow cubemap code
+        
         for entity in self.scene.entities {
             
             self.scene.entitiesModify[index](&entity.uniforms) //Calls update function associated w/ entity

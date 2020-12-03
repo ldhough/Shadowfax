@@ -37,6 +37,16 @@ class SfaxMath {
     
 }
 
+extension Float {
+    static var halfPi:Float = .pi / 2
+    static var twoPi:Float = .pi * 2
+}
+
+extension CGFloat {
+    static var halfPi:CGFloat = .pi / 2
+    static var twoPi:CGFloat = .pi * 2
+}
+
 extension float4 {
     static var red:float4 {
         float4(1, 0, 0, 1)

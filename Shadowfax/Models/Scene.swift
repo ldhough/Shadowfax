@@ -12,6 +12,9 @@ import ModelIO
 class Scene {
     
     var lights:[Light] = []
+    var shadowmaps:[MTLTexture] = []
+    var shadowRenderPassDescs:[MTLRenderPassDescriptor] = []
+    
     var entities:[Entity] = []
     var entitiesModify:[(inout Uniforms) -> Void] = []
     var camera:Camera

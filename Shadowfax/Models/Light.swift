@@ -9,6 +9,10 @@ import Foundation
 
 class Lighting {
     
+    
+    
+    //Utility functions
+    
     static func makePointLight() -> Light {
         var light = Light(position: [0, 0, 0],
                           color: [1, 1, 1],

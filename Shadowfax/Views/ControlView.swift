@@ -66,7 +66,7 @@ struct ControlView: View {
                             panStart = value.location
                             lastPanPoint = value.location
                         }
-                        let sensitivity:CGFloat = CGFloat(sfaxScene.scene.camera.sensitivity)
+                        let sensitivity:CGFloat = CGFloat(sfaxScene.scene.camera.sensitivity) * 3
                         let screenWidth = UIScreen.main.bounds.width
                         let screenHeight = UIScreen.main.bounds.height
                         let distanceTraveledHoriz = value.location.x-lastPanPoint.x
@@ -74,11 +74,20 @@ struct ControlView: View {
                         lastPanPoint = value.location
                         let percentTraveledHoriz = abs(distanceTraveledHoriz) / screenWidth
                         let percentTraveledVert = abs(distanceTraveledVert) / screenHeight
-                        let horizAngle = (distanceTraveledHoriz > 0 ? 180*sensitivity : -180*sensitivity) * percentTraveledHoriz
-                        let vertAngle = (distanceTraveledVert > 0 ? 180*sensitivity : -180*sensitivity) * percentTraveledVert
-                        sfaxScene.scene.camera.rotation = [SfaxMath.degreesToRadians(Float(vertAngle)) + sfaxScene.scene.camera.rotation.x,
-                                                      SfaxMath.degreesToRadians(Float(horizAngle)) + sfaxScene.scene.camera.rotation.y,
-                                                      0]
+                        let horizAngleTraveled = (distanceTraveledHoriz > 0 ? 180*sensitivity : -180*sensitivity) * percentTraveledHoriz
+                        let vertAngleTraveled = (distanceTraveledVert > 0 ? 180*sensitivity : -180*sensitivity) * percentTraveledVert
+                        
+                        var vertAngle = SfaxMath.degreesToRadians(Float(vertAngleTraveled)) + sfaxScene.scene.camera.rotation.x
+                        let horizAngle = SfaxMath.degreesToRadians(Float(horizAngleTraveled)) + sfaxScene.scene.camera.rotation.y
+                        
+                        if vertAngle > .halfPi {
+                            vertAngle = .halfPi
+                        } else if vertAngle < -.halfPi {
+                            vertAngle = -.halfPi
+                        }
+                        sfaxScene.scene.camera.rotation = [vertAngle,
+                                                           horizAngle,
+                                                           0]
                     }.onEnded({ _ in
                         panStart = nil
                         lastPanPoint = nil

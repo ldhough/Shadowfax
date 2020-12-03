@@ -77,7 +77,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 let prevPos = sfSc.scene.camera.position
                 //Rotation describes how camera is looking into scene, use this to find xyz components of moving in that direction
                 let distTraveled:Float = 0.1
-                let maxRad:Float = 2 * .pi
+                //let maxRad:Float = 2 * .pi
                 let rot = sfSc.scene.camera.rotation
                 var rotX, rotY, rotZ:Float
                 rotX = rot.x //about x, cam up or down //pitch
@@ -87,7 +87,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 dx = sin(rotY) * distTraveled
                 dz = cos(rotY) * distTraveled
                 dy = 0.0
-                //dy = -(sin(rotX) * distTraveled)
+                dy = -(sin(rotX) * distTraveled)
 
                 print("XYZ Rotation: \(String(rotX)), \(String(rotY)), \(String(rotZ))")
                 print("XYZ Position: \(String(prevPos.x)), \(String(prevPos.y)), \(String(prevPos.z))")
