@@ -15,6 +15,7 @@ class Renderer: NSObject, MTKViewDelegate {
     var commandQueue:MTLCommandQueue!
     var library:MTLLibrary!
     var defaultRenderPipelineState:MTLRenderPipelineState!
+    var shadowPipeState:MTLRenderPipelineState!
     var uniforms = Uniforms()
     var vertexBuffer:MTLBuffer!
     var projMatrix:float4x4 {
@@ -40,6 +41,7 @@ class Renderer: NSObject, MTKViewDelegate {
         self.library = self.device.makeDefaultLibrary()
         self.depthStencilState = self.buildDepthStencilState()
         self.createDefaultRenderPipelineState()
+        self.makeShadowRenderPipelineState()
     }
     
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
@@ -53,8 +55,80 @@ class Renderer: NSObject, MTKViewDelegate {
         return self.device.makeDepthStencilState(descriptor: descriptor)
     }
     
-    func shadowmap() {
+    func shadowmapPass(cmdBuffer: MTLCommandBuffer, shadowmap:MTLTexture) {//-> MTLTexture {//renderEncoder: MTLRenderCommandEncoder) {
+        //Make shadow cubemap for sunlight - temp hacky solution
         
+//        var shadowmap:MTLTexture = Utils.buildTexture(pixelFormat: .depth32Float,
+//                                                      size: CGSize(width: 1024*6, height: 1024),
+//                                                      usage: [.renderTarget, .shaderRead],
+//                                                      device: self.device,
+//                                                      label: "sunShadowmap")
+        //self.scene.shadowmaps.append(shadowmap)
+        let shadowRPD = MTLRenderPassDescriptor()
+        shadowRPD.depthAttachment.texture = shadowmap
+        shadowRPD.depthAttachment.loadAction = .clear
+        shadowRPD.depthAttachment.storeAction = .store
+        shadowRPD.depthAttachment.clearDepth = 1
+        //self.scene.shadowRenderPassDescs[0] = shadowRPD//.append(shadowRPD)
+        
+        guard let renderEncoder = cmdBuffer.makeRenderCommandEncoder(descriptor: shadowRPD) else {
+            return
+        }
+        
+        renderEncoder.pushDebugGroup("SHADOW PASS")
+        renderEncoder.label = "shadow encoder"
+
+        renderEncoder.setCullMode(.none)
+        renderEncoder.setDepthStencilState(depthStencilState)
+        renderEncoder.setDepthBias(0.01, slopeScale: 1.0, clamp: 0.01)
+        let pos:float3 = [0, 0, 0]//self.scene.lights[0].position
+        let lookingAt:float3 = [1, 0, 0]
+        let up:float3 = [0, 1, 0]
+        let lookAt = float4x4(eye: pos, center: lookingAt, up: up)
+        var unis = Uniforms()
+        
+        unis.projectionMatrix = float4x4(l: -8, r: 8, bottom: -8, top: 8, near: 0.1, far: 16)
+        unis.viewMatrix = lookAt
+        unis.shadowMatrix = unis.projectionMatrix * unis.viewMatrix
+        
+        renderEncoder.setRenderPipelineState(shadowPipeState)
+        
+        for entity in self.scene.entities {
+            unis.modelMatrix = entity.uniforms.modelMatrix
+            unis.normalMatrix = float3x3(normalFrom4x4: unis.modelMatrix)
+            
+            renderEncoder.setVertexBytes(&uniforms, length: MemoryLayout<Uniforms>.stride, index: 1)
+            renderEncoder.setVertexBuffer(entity.mesh.vertexBuffers[0].buffer, offset: 0, index: 0)
+            for submesh in entity.mesh.submeshes {
+                
+                renderEncoder.drawIndexedPrimitives(type: .triangle,
+                                                      indexCount: submesh.indexCount,
+                                                      indexType: submesh.indexType,
+                                                      indexBuffer: submesh.indexBuffer.buffer,
+                                                      indexBufferOffset: 0) //submesh.indexBuffer.offset
+            }
+        }
+        
+        renderEncoder.endEncoding()
+        renderEncoder.popDebugGroup()
+        
+        //return shadowmap
+        //end shadow cubemap code
+    }
+    
+    func makeShadowRenderPipelineState() {
+        let pipelineDescriptor = MTLRenderPipelineDescriptor()
+        pipelineDescriptor.vertexFunction = library.makeFunction(
+          name: "vertex_shadow")
+        pipelineDescriptor.fragmentFunction = nil
+        pipelineDescriptor.colorAttachments[0].pixelFormat = .invalid
+        pipelineDescriptor.vertexDescriptor = MTKMetalVertexDescriptorFromModelIO(MDLVertexDescriptor.defaultVertexDescriptor())
+        pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+        do {
+          shadowPipeState = try device.makeRenderPipelineState(descriptor: pipelineDescriptor)
+        } catch let error {
+          fatalError(error.localizedDescription)
+        }
     }
     
     func draw(in view: MTKView) {
@@ -73,27 +147,29 @@ class Renderer: NSObject, MTKViewDelegate {
         }
         
         let commandBuffer = self.commandQueue.makeCommandBuffer()
+        
+        //WORKING ON SHADOW RENDER PASS
+         
+        //let shadowEncoder = commandBuffer.makeRender
+        var shadowmap:MTLTexture = Utils.buildTexture(pixelFormat: .depth32Float,
+                                                      size: CGSize(width: 1024*6, height: 1024),
+                                                      usage: [.renderTarget, .shaderRead],
+                                                      device: self.device,
+                                                      label: "sunShadowmap")
+        self.shadowmapPass(cmdBuffer: commandBuffer!, shadowmap: shadowmap)//renderEncoder: commandEncoder!)
+         
+        //WORKING ON SHADOW RENDER PASS END
+        
         let commandEncoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
+        
         commandEncoder?.setDepthStencilState(self.depthStencilState)
         
         var index = 0
         commandEncoder?.setFragmentBytes(&self.scene.lights[0], length: MemoryLayout<Light>.stride, index: 2)
         
-        //Make shadow cubemap for sunlight - temp hacky solution
-        var shadowmap = Utils.buildTexture(pixelFormat: .bgra8Unorm,
-                                           size: CGSize(width: 1024*6, height: 1024),
-                                           usage: [.renderTarget, .shaderRead],
-                                           device: self.device,
-                                           label: "sunShadowmap")
-        self.scene.shadowmaps.append(shadowmap)
-        var shadowRPD = MTLRenderPassDescriptor()
-        shadowRPD.depthAttachment.texture = shadowmap
-        shadowRPD.depthAttachment.loadAction = .clear
-        shadowRPD.depthAttachment.storeAction = .store
-        shadowRPD.depthAttachment.clearDepth = 1
-        self.scene.shadowRenderPassDescs.append(<#T##newElement: MTLRenderPassDescriptor##MTLRenderPassDescriptor#>)
-        
-        //end shadow cubemap code
+        //SHADOWMAP START
+        commandEncoder?.setFragmentTexture(shadowmap, index: 1)
+        //SHADOWMAP END
         
         for entity in self.scene.entities {
             

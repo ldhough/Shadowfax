@@ -21,7 +21,7 @@ class Scene {
     var renderer:Renderer!
     
     func addEntity(name: String = "", mesh: MTKMesh, uniforms: inout Uniforms, texture: MTLTexture? = nil,
-                   obeysLight: Bool = true, isLight: Bool = false,
+                   obeysLight: Bool = true, isLight: Bool = false,//light: Light?,//isLight: Bool = false,
                    updateUniforms: @escaping (inout Uniforms) -> Void) {
         let entity = Entity()
         entity.mesh = mesh
@@ -30,9 +30,18 @@ class Scene {
         entity.name = name
         
         entity.obeysLight = obeysLight
+//        if let l = light {
+//
+//        }
         if isLight {
-            let light = Lighting.makePointLight()
+            let light = SfaxLight.makePointLight()
             lights.append(light)
+//            var shadowmap:MTLTexture = Utils.buildTexture(pixelFormat: .depth32Float,
+//                                                          size: CGSize(width: 1024*6, height: 1024),
+//                                                          usage: [.renderTarget, .shaderRead],
+//                                                          device: self.device,
+//                                                          label: "sunShadowmap")
+//            shadowmaps.append(shadowmap)
         }
         
         if texture != nil {

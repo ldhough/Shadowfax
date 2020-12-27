@@ -98,16 +98,29 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
         }, false)
         
-//        let x = r * cos(currentAngle)
-//        let y = r * sin(currentAngle)
-        
         //END DESCRIBE SCENE
         
-        let contentView = ControlView(sfaxScene: sfSc)
+        //DESCRIBE SCENE TWO
+        
+        let sfSc2:SfaxScene = SfaxScene()
+        let vertices:[Vertex] = []
+        var dsArray:[[Float]] = []
+        let size = 17
+        
+        for i in 0 ..< size {
+            dsArray.append([])
+            for _ in 0 ..< size {
+                dsArray[i].append(0.5)
+            }
+        }
+        
+        //END DESCRIBE SCENE TWO
+        
+        let solarSystemView = ControlView(sfaxScene: sfSc)
 
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = UIHostingController(rootView: contentView)
+            window.rootViewController = UIHostingController(rootView: solarSystemView)
             self.window = window
             window.makeKeyAndVisible()
         }
@@ -134,4 +147,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
 }
-

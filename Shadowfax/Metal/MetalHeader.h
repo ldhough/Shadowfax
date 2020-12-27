@@ -19,6 +19,7 @@ typedef struct {
     matrix_float4x4 viewMatrix; //Camera
     matrix_float4x4 projectionMatrix;
     matrix_float3x3 normalMatrix;
+    matrix_float4x4 shadowMatrix; //for shadowmapping
 } Uniforms;
 
 typedef struct {

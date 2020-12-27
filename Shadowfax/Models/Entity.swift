@@ -9,13 +9,18 @@ import Foundation
 import MetalKit
 import ModelIO
 
-class Entity {
+class Entity { //make all ?
     var name:String!
     var mesh:MTKMesh!
     var tex:MTLTexture!
     var renderPipelineState:MTLRenderPipelineState!
     var uniforms:Uniforms!
     var obeysLight:Bool!
+    var light:Light!
+    
+    init() {
+        
+    }
 }
 
 class Models {

@@ -101,6 +101,18 @@ extension MDLVertexDescriptor {
         return mdlVertDes
     }
     
+    static func defaultVertexDescriptor() -> MDLVertexDescriptor {
+      let vertexDescriptor = MDLVertexDescriptor()
+      vertexDescriptor.attributes[0] = MDLVertexAttribute(name: MDLVertexAttributePosition,
+                                                          format: .float3,
+                                                          offset: 0, bufferIndex: 0)
+      vertexDescriptor.attributes[1] = MDLVertexAttribute(name: MDLVertexAttributeNormal,
+                                                          format: .float3,
+                                                          offset: 12, bufferIndex: 0)
+      vertexDescriptor.layouts[0] = MDLVertexBufferLayout(stride: 24)
+      return vertexDescriptor
+    }
+    
 }
 
 //Trying to see if I can do this

@@ -7,13 +7,20 @@
 
 import Foundation
 
-class Lighting {
+class SfaxLight {
     
+    var light:Light
     
+    init(light: Light) {
+        self.light = light
+    }
     
     //Utility functions
     
-    static func makePointLight() -> Light {
+    static func makePointLight(position: float3 = [0, 0, 0],
+                               color: float3 = [1, 1, 1],
+                               intensity: Float = 1,
+                               attenuation: float3 = [1, 0, 0]) -> Light {
         var light = Light(position: [0, 0, 0],
                           color: [1, 1, 1],
                           intensity: 1,

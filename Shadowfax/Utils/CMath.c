@@ -131,4 +131,11 @@ void diamondSquareGenHeightmap(void *arr, int size, int maxRand, int timesMaxR, 
         }
         magnitude -= magChange;
     }
+    
+    for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                printf("%f | ", array[i][j]);
+            }
+            printf("\n");
+        }
 }

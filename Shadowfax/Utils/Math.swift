@@ -132,6 +132,41 @@ extension float4x4 {
         )
         self = matrix
     }
+    
+    init(eye: float3, center: float3, up: float3) {
+      let z = normalize(center - eye)
+      let x = normalize(cross(up, z))
+      let y = cross(z, x)
+      
+      let X = float4(x.x, y.x, z.x, 0)
+      let Y = float4(x.y, y.y, z.y, 0)
+      let Z = float4(x.z, y.z, z.z, 0)
+      let W = float4(-dot(x, eye), -dot(y, eye), -dot(z, eye), 1)
+      
+      self.init()
+      columns = (X, Y, Z, W)
+    }
+    
+    init(l: Float, r: Float, bottom: Float, top: Float, near: Float, far: Float) {
+      let X = float4(2 / (r - l), 0, 0, 0)
+      let Y = float4(0, 2 / (top - bottom), 0, 0)
+      let Z = float4(0, 0, 1 / (far - near), 0)
+      let W = float4((l + r) / (l - r),
+                     (top + bottom) / (bottom - top),
+                     near / (near - far),
+                     1)
+      self.init()
+      columns = (X, Y, Z, W)
+    }
 
+}
+
+extension float3x3 {
+    
+  init(normalFrom4x4 matrix: float4x4) {
+    self.init()
+    columns = SfaxMath.upperLeft(matrix).inverse.transpose.columns
+  }
+    
 }
 
