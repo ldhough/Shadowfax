@@ -102,17 +102,90 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         //DESCRIBE SCENE TWO
         
-        let sfSc2:SfaxScene = SfaxScene()
-        let vertices:[Vertex] = []
-        var dsArray:[[Float]] = []
-        let size = 17
         
-        for i in 0 ..< size {
-            dsArray.append([])
-            for _ in 0 ..< size {
-                dsArray[i].append(0.5)
+//        let ptr:UnsafeMutablePointer<UnsafeMutablePointer<Float>?>?
+//            = diamondSquareGenHeightmap(9, 1, 1000, 0.5, 0.5, 0.5, 0.5);
+        
+        let ptr:UnsafeMutableRawPointer? = diamondSquareGenHeightmap(9, 1, 1000, 0.5, 0.5, 0.5, 0.5);
+//        let x = ptr?.load(fromByteOffset: 0, as: Float.self)
+        
+        let fStride = MemoryLayout<Float>.stride
+        var array:[[Float]] = []
+        for i in (0 ..< 9) {
+            var subArray:[Float] = []
+            for j in (0 ..< 9) {
+                let number = ptr?.load(fromByteOffset: (i*(fStride*9))+(j*fStride), as: Float.self)
+                subArray.append(number!)
             }
+            array.append(subArray)
         }
+        for sa in array {
+            print(sa)
+        }
+        
+//        print(x!)
+//        let buffer = UnsafeRawBufferPointer(start: ptr, count: 81 * 4)
+//
+//        for (index, byte) in buffer.enumerated() {
+//            let v:String = byte
+//        }
+        
+//        let buffer:UnsafeMutableBufferPointer<UnsafeMutablePointer<Float>?>
+//            = UnsafeMutableBufferPointer(start: ptr, count: 9)
+//
+//        let sArr:[[Float]] = []
+        
+        //while let a = buffer.baseAddress?.pointee {
+//            print(a)
+//            let things = buffer.compactMap({ ptr in
+//                var fArr:[Float] = []
+//                let subBuffer = UnsafeMutableBufferPointer(start: ptr, count: 9)
+//                subBuffer.compactMap({ flt in
+//                    fArr.append(flt)
+//                })
+//            })
+        //}
+        
+        
+        
+//        while let a = ptr?.pointee {
+//            print(a)
+//            ptr += 1
+//        }
+        
+//        let buffer:UnsafeMutableBufferPointer<UnsafeMutablePointer<Float>?>
+//            = UnsafeMutableBufferPointer(start: ar, count: 9)
+//        print(buffer) // addr of first element
+//        let addrArr0 = buffer.baseAddress
+//        print(addrArr0?.pointee)
+//
+//        let arr:[UnsafeMutablePointer<Float>?] = Array(buffer)
+//        for row in arr {
+//            print(row!)
+//        }
+//
+//        var array:[[Float]] = []
+//        for row in arr {
+//            let buffer:UnsafeMutableBufferPointer<Float>
+//                = UnsafeMutableBufferPointer(start: row, count: 9)
+//            let rw:[Float] = Array(buffer)
+//            array.append(rw)
+//        }
+//
+//        for row in array {
+//            var printStr = ""
+//            for element in row {
+//                printStr += "\(element) | "
+//            }
+//            print(printStr)
+//        }
+        //        let matrix = (0 ..< 9).map { row in
+        //            UnsafeBufferPointer(start: ar, count: 9)
+        //        }
+        //        let s:String = matrix
+                //print(ar)
+                //print(ar?.pointee?.pointee)
+
         
         //END DESCRIBE SCENE TWO
         

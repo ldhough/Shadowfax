@@ -90,12 +90,17 @@ void squareStep(void *array, int step, int size, int *prevRows, int *prevDist, f
     }
 }
 
-void diamondSquareGenHeightmap(void *arr, int size, int maxRand, int timesMaxR, float c1, float c2, float c3, float c4) {
+void* diamondSquareGenHeightmap(/*void *arr, */int size, int maxRand, int timesMaxR, float c1, float c2, float c3, float c4) {
     //Cast to 2D float array
-    float (*array)[size][size] = (float (*)[size][size]) arr;
-
+    //float arr[size][size];
+    //float (*array)[size][size] = &arr;//(float (*)[size][size]) arr;
+    //float **arr = malloc(sizeof(float) * (size * size));
+    //float (*array)[size][size] = (float (*)[size][size]) arr;
+    float (*array)[size][size] = malloc(sizeof *array);
+    
+    
     if (randSeeded == 0) { //If random isn't seeded, seed rand
-        srand(time(0));
+        srand((unsigned) time(0));
         randSeeded = 1;
     }
 
@@ -113,8 +118,9 @@ void diamondSquareGenHeightmap(void *arr, int size, int maxRand, int timesMaxR, 
     for (int step = 0; step < numSteps; step++) {
 
         if (step == 0) {
-            //Initialize corners on first step
+//            //Initialize corners on first step
             (*array)[0][0] = c1; //top left
+//            //printf("%f", (*array)[0][0]);
             (*array)[size-1][0] = c2; //top right
             (*array)[0][size-1] = c3; //bottom left
             (*array)[size-1][size-1] = c4; //bottom right
@@ -133,9 +139,24 @@ void diamondSquareGenHeightmap(void *arr, int size, int maxRand, int timesMaxR, 
     }
     
     for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                printf("%f | ", array[i][j]);
-            }
-            printf("\n");
+        for (int j = 0; j < size; j++) {
+            printf("%f | ", (*array)[i][j]);
+//            printf("%p | ", &((*array)[i][j]));
         }
+        printf("\n");
+    }
+    
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+//            printf("%f | ", (*array)[i][j]);
+            printf("%p | ", &((*array)[i][j]));
+        }
+        printf("\n");
+    }
+//    printf("size of 2: %lu", sizeof(array));
+//    float **tmp = (float**) (*array);
+//    printf("%p \n", &tmp[0]);
+//    arr = (float**) *array;
+    printf("%p\n", *array);
+    return (float**) (*array);//&tmp[0];//(float**) (*array);
 }

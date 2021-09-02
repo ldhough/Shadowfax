@@ -16,6 +16,6 @@
 float randomNum(int maxRand, int timesMaxR);
 void diamondStep(void *array, int step, int size, float magnitude, int maxR, int timesMaxR);
 void squareStep(void *array, int step, int size, int *prevRows, int *prevDist, float magnitude, int maxR, int timesMaxR);
-void diamondSquareGenHeightmap(void *arr, int size, int maxRand, int timesMaxR, float c1, float c2, float c3, float c4);
+void* diamondSquareGenHeightmap(/*void *arr,*/ int size, int maxRand, int timesMaxR, float c1, float c2, float c3, float c4);
 
 #endif /* CMath_h */

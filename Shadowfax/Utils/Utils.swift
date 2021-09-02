@@ -118,7 +118,7 @@ extension MDLVertexDescriptor {
 //Trying to see if I can do this
 infix operator =||=
 func =||=<T: Comparable>(lhs: T, rhs: (T, T)) -> Bool {
-    return lhs == rhs.0 || lhs == rhs.1 ? true : false
+    return lhs == rhs.0 || lhs == rhs.1
 }
 
 infix operator %
